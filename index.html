@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MASTER AUDIT + | Dissertation L. Krauße</title>
+    <title>AUDIT FINAL | Dissertation L. Krauße</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
         :root {
             /* PAPER THEME - MAXIMUM READABILITY */
-            --bg-body: #f3f4f6;       
+            --bg-body: #f8f9fa;       
             --bg-paper: #ffffff;
-            --text-main: #111827;     /* Fast Schwarz */
-            --text-sec: #4b5563;      /* Dunkles Grau */
+            --text-main: #212529;     /* Tiefschwarz für besten Kontrast */
+            --text-sec: #495057;      /* Dunkles Grau */
             
-            /* Semantic Colors (High Contrast) */
-            --col-err: #dc2626;       /* Rot */
-            --bg-err: #fef2f2;
-            --col-fix: #16a34a;       /* Grün */
-            --bg-fix: #f0fdf4;
-            --col-info: #2563eb;      /* Blau */
-            --col-warn: #d97706;      /* Orange */
+            /* Semantic Colors (High Contrast & Clear) */
+            --col-err: #c92a2a;       /* Dunkles Rot */
+            --bg-err: #fff5f5;
+            --col-fix: #2b8a3e;       /* Dunkles Grün */
+            --bg-fix: #ebfbee;
+            --col-info: #1864ab;      /* Dunkles Blau */
+            --col-warn: #e67700;      /* Dunkles Orange */
 
             --font-ui: 'Inter', sans-serif;
             --font-read: 'Merriweather', serif;
@@ -43,31 +43,32 @@
         /* --- Layout Elements --- */
         .paper-sheet {
             background: var(--bg-paper);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #dee2e6;
             border-radius: 8px;
-            border: 1px solid #e5e7eb;
             margin-bottom: 2rem;
             padding: 2rem;
         }
 
         .navbar {
             background: #fff;
-            border-bottom: 1px solid #e5e7eb;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #dee2e6;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        h1, h2, h3, h4 { letter-spacing: -0.025em; color: #000; }
+        h1, h2, h3, h4 { letter-spacing: -0.01em; color: #000; font-weight: 800; }
 
         /* --- Correction Cards --- */
         .issue-card {
             border-left: 6px solid transparent;
             background: #fff;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #dee2e6;
             border-radius: 8px;
-            transition: all 0.2s;
+            transition: transform 0.2s;
             height: 100%;
+            position: relative;
         }
-        .issue-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .issue-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         
         .border-crit { border-left-color: var(--col-err); }
         .border-warn { border-left-color: var(--col-warn); }
@@ -80,84 +81,104 @@
             padding: 4px 8px;
             border-radius: 4px;
             letter-spacing: 0.05em;
+            display: inline-block;
         }
-        .bg-crit-light { background: var(--bg-err); color: var(--col-err); }
-        .bg-warn-light { background: #fffbeb; color: var(--col-warn); }
+        .bg-crit-light { background: var(--bg-err); color: var(--col-err); border: 1px solid var(--col-err); }
+        .bg-warn-light { background: #fff9db; color: var(--col-warn); border: 1px solid var(--col-warn); }
 
         /* --- Context/Diff View --- */
         .context-wrapper {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
             border-radius: 6px;
-            padding: 1rem;
+            padding: 1.25rem;
             font-family: var(--font-read);
-            font-size: 1rem;
-            color: var(--text-sec);
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-top: 1rem;
         }
         
         .marker-err {
-            background: #fee2e2;
-            color: #991b1b;
+            background: #ffe3e3;
+            color: #c92a2a;
             text-decoration: line-through;
             padding: 2px 6px;
             border-radius: 4px;
-            margin-right: 8px;
+            margin-right: 10px;
             font-family: var(--font-code);
             font-size: 0.9em;
         }
         
         .marker-fix {
-            background: #dcfce7;
-            color: #166534;
+            background: #d3f9d8;
+            color: #2b8a3e;
             font-weight: 700;
-            padding: 2px 6px;
+            padding: 4px 8px;
             border-radius: 4px;
-            border-bottom: 2px solid var(--col-fix);
+            border-bottom: 3px solid var(--col-fix);
             font-style: normal;
         }
 
         .reason-box {
-            margin-top: 12px;
+            margin-top: 15px;
             padding-top: 12px;
-            border-top: 1px dashed #d1d5db;
-            font-size: 0.9rem;
-            color: #374151;
+            border-top: 1px dashed #ced4da;
+            font-size: 0.95rem;
+            color: var(--text-sec);
             display: flex;
             align-items: start;
-            gap: 10px;
+            gap: 12px;
+            background-color: #fff;
         }
 
         /* --- Literature --- */
         .lit-row {
-            padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
+            padding: 1.25rem;
+            border-bottom: 1px solid #dee2e6;
             cursor: pointer;
             transition: background 0.1s;
         }
-        .lit-row:hover { background-color: #f3f4f6; }
-        .lit-author { font-weight: 700; color: #000; }
+        .lit-row:hover { background-color: #f1f3f5; }
+        .lit-author { font-weight: 800; color: #000; }
         .lit-journal { color: var(--col-info); font-style: italic; }
 
         /* --- Fun Section --- */
         .fun-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4c6ef5 0%, #be4bdb 100%);
             color: white;
             border-radius: 12px;
             padding: 3rem;
             text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+            margin-top: 4rem;
         }
+        
+        /* Copy Button */
+        .copy-btn {
+            cursor: pointer;
+            color: var(--col-info);
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: var(--font-ui);
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .copy-btn:hover { text-decoration: underline; }
+
     </style>
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-clipboard-check me-2 text-success"></i>AUDIT MANAGER</a>
-            <div class="d-flex gap-3">
-                <a href="#structural" class="fw-bold text-decoration-none text-danger">1. Struktur</a>
-                <a href="#text" class="fw-bold text-decoration-none text-warning">2. Text</a>
-                <a href="#lit" class="fw-bold text-decoration-none text-primary">3. Literatur</a>
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-check-double me-2 text-success"></i>AUDIT MANAGER</a>
+            <div class="d-flex gap-2">
+                <a href="#structural" class="btn btn-sm btn-outline-danger fw-bold">1. Struktur</a>
+                <a href="#text" class="btn btn-sm btn-outline-warning text-dark fw-bold">2. Text</a>
+                <a href="#lit" class="btn btn-sm btn-outline-primary fw-bold">3. Literatur</a>
             </div>
         </div>
     </nav>
@@ -166,40 +187,59 @@
         
         <div class="paper-sheet" data-aos="fade-up">
             <h1 class="display-6 fw-bold mb-2">Korrekturbericht: Luisa Krauße</h1>
-            <p class="text-secondary mb-0">Status: <strong>Final & Kritisch geprüft</strong>. Enthält Begründungen für jede Änderung.</p>
+            <p class="text-secondary mb-0">Status: <strong>Final & Vollständig</strong>. Nutzen Sie die Kopier-Buttons für fehlerfreie Übernahme.</p>
         </div>
 
         <section id="structural" class="mb-5">
             <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-danger"><i class="fa-solid fa-sitemap me-2"></i>I. Kritische Strukturfehler</h3>
             
             <div class="row g-4">
+                
                 <div class="col-12" data-aos="fade-up">
                     <div class="issue-card p-4 border-start border-5 border-danger">
                         <div class="d-flex justify-content-between mb-3">
-                            <span class="status-badge bg-crit-light">Logik-Fehler</span>
-                            <small class="font-monospace text-secondary">[Seite 24/25]</small>
+                            <span class="status-badge bg-crit-light">Leitfaden S. 1 (Pflicht)</span>
+                            <small class="font-monospace text-secondary fw-bold">Ort: Rückseite Titelblatt</small>
                         </div>
-                        <h4 class="h5 fw-bold">Doppelte Kapitelnummerierung (2.1.1)</h4>
+                        <h4 class="h5 fw-bold">Gender-Erklärung fehlt</h4>
+                        <p class="text-secondary mb-2">Dieser Textblock muss vollständig eingefügt werden:</p>
                         
-                        <div class="context-wrapper bg-white">
-                            <div class="row">
-                                <div class="col-md-6 border-end">
-                                    <div class="small text-uppercase text-danger fw-bold mb-2">Ist-Zustand</div>
-                                    <p class="mb-1 text-danger">2.1.1 Verbrauchsmaterialien (Tab. 5)</p>
-                                    <p class="mb-0 text-danger">2.1.1 Chemikalien (Tab. 4)</p>
-                                </div>
-                                <div class="col-md-6 ps-md-4">
-                                    <div class="small text-uppercase text-success fw-bold mb-2">Soll-Zustand</div>
-                                    <p class="mb-1 text-success fw-bold">2.1.1 Chemikalien (Tab. 4)</p>
-                                    <p class="mb-0 text-success fw-bold">2.1.2 Verbrauchsmaterialien (Tab. 5)</p>
-                                </div>
+                        <div class="context-wrapper bg-white border-success" style="border-left-width: 5px;">
+                            <p class="mb-0 fst-italic text-success fw-bold" id="genderText">
+                                "Zur besseren Lesbarkeit wird in dieser Dissertation das generische Maskulinum verwendet. Die in dieser Dissertation verwendeten Personenbezeichnungen beziehen sich – sofern nicht anders kenntlich gemacht – auf alle Geschlechter."
+                            </p>
+                            <div class="mt-2 text-end">
+                                <span class="copy-btn" onclick="copyText(document.getElementById('genderText').innerText)">
+                                    <i class="fa-regular fa-copy"></i> Text kopieren
+                                </span>
                             </div>
                         </div>
 
                         <div class="reason-box">
                             <i class="fa-solid fa-circle-info text-primary mt-1"></i>
+                            <div><strong>Begründung:</strong> Die Fakultät schreibt diesen exakten Wortlaut oder eine sinngemäße Erklärung zwingend vor. Fehlt er, ist die Arbeit formal unvollständig.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="issue-card p-4 border-start border-5 border-danger h-100">
+                        <span class="status-badge bg-crit-light mb-3">Logik-Fehler</span>
+                        <h5 class="fw-bold">Doppelte Kapitelnummerierung (2.1.1)</h5>
+                        
+                        <div class="context-wrapper bg-white">
+                            <div class="text-danger mb-2"><i class="fa-solid fa-xmark me-2"></i><strong>Falsch:</strong> 2.1.1 Verbrauchsmaterialien (Tab. 5) vor 2.1.1 Chemikalien (Tab. 4)</div>
+                            <div class="text-success"><i class="fa-solid fa-check me-2"></i><strong>Korrektur:</strong> Tauschen & Nummerieren:</div>
+                            <ul class="list-unstyled ms-4 mt-2 text-success fw-bold">
+                                <li>2.1.1 Chemikalien (Tab. 4)</li>
+                                <li>2.1.2 Verbrauchsmaterialien (Tab. 5)</li>
+                            </ul>
+                        </div>
+
+                        <div class="reason-box">
+                            <i class="fa-solid fa-circle-info text-primary mt-1"></i>
                             <div>
-                                <strong>Begründung:</strong> Die Tabellen müssen im Text chronologisch nummeriert sein (Tabelle 4 vor 5). Aktuell erscheint Tabelle 5 im ersten Kapitel 2.1.1 vor Tabelle 4 im zweiten Kapitel 2.1.1. Dies verletzt die logische Struktur wissenschaftlicher Arbeiten.
+                                <strong>Begründung:</strong> Tabellen müssen chronologisch nummeriert sein. Die Kapitelstruktur war logisch falsch aufgebaut (doppelte ID).
                             </div>
                         </div>
                     </div>
@@ -207,29 +247,15 @@
 
                 <div class="col-md-6" data-aos="fade-up">
                     <div class="issue-card p-4 border-start border-5 border-danger h-100">
-                        <span class="status-badge bg-crit-light mb-3 d-inline-block">Formalie (Muss)</span>
-                        <h5 class="fw-bold">Gender-Erklärung fehlt</h5>
-                        <div class="context-wrapper mt-3">
-                            <span class="marker-fix text-success">"Zur besseren Lesbarkeit wird in dieser Dissertation das generische Maskulinum verwendet..."</span>
-                        </div>
-                        <div class="reason-box">
-                            <i class="fa-solid fa-book text-primary mt-1"></i>
-                            <div><strong>Begründung:</strong> Der <code>Leitfaden S. 1</code> fordert diesen Satz explizit. Ohne diesen Hinweis kann die Arbeit wegen Formmangels zurückgewiesen werden.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6" data-aos="fade-up">
-                    <div class="issue-card p-4 border-start border-5 border-danger h-100">
-                        <span class="status-badge bg-crit-light mb-3 d-inline-block">Veraltete Begriffe</span>
+                        <span class="status-badge bg-crit-light mb-3">Veraltete Begriffe</span>
                         <h5 class="fw-bold">Eidesstattliche Versicherung</h5>
                         <div class="context-wrapper mt-3">
-                            Alt: <span class="marker-err">Ehrenwörtliche Erklärung</span><br>
+                            Alt: <span class="marker-err">Ehrenwörtliche Erklärung</span><br><br>
                             Neu: <span class="marker-fix">Eidesstattliche Versicherung</span>
                         </div>
                         <div class="reason-box">
                             <i class="fa-solid fa-book text-primary mt-1"></i>
-                            <div><strong>Begründung:</strong> Laut <code>Leitfaden S. 5 und 8</code> ist "Ehrenwörtliche Erklärung" nicht mehr der korrekte Terminus. Es handelt sich um ein Rechtsdokument.</div>
+                            <div><strong>Begründung:</strong> <code>Leitfaden S. 5/8</code>: Dies ist der korrekte juristische Terminus an der FSU Jena.</div>
                         </div>
                     </div>
                 </div>
@@ -238,7 +264,7 @@
 
         <section id="text" class="mb-5">
             <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-warning"><i class="fa-solid fa-spell-check me-2"></i>II. Text & Mikro-Typografie</h3>
-            <p class="text-secondary mb-4">Suche per Strg+F nach den roten Markierungen im Word-Dokument.</p>
+            <p class="text-secondary mb-4">Hier sind die exakten Fundstellen. Suche per <code>Strg+F</code> nach dem roten Text im Word-Dokument.</p>
             
             <div id="text-grid" class="row g-4">
                 </div>
@@ -248,9 +274,9 @@
             <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-primary"><i class="fa-solid fa-book me-2"></i>III. Literaturverzeichnis</h3>
             
             <div class="paper-sheet p-0 overflow-hidden">
-                <div class="bg-light p-3 border-bottom d-flex justify-content-between align-items-center">
-                    <small class="fw-bold text-secondary"><i class="fa-solid fa-check me-1"></i>Jena-Standard: Index Medicus Abk., keine Punkte, alle Autoren.</small>
-                    <input type="text" id="litSearch" class="form-control form-control-sm w-auto" placeholder="Referenz suchen...">
+                <div class="bg-light p-3 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <small class="fw-bold text-secondary"><i class="fa-solid fa-check me-1"></i>Regeln: Index Medicus Abk., keine Punkte, alle Autoren gelistet.</small>
+                    <input type="text" id="litSearch" class="form-control form-control-sm w-auto border-secondary" placeholder="Referenz suchen...">
                 </div>
                 <div id="lit-container" style="max-height: 600px; overflow-y: auto;">
                     </div>
@@ -260,10 +286,10 @@
         <section class="mt-5 pt-5" data-aos="zoom-in">
             <div class="fun-section">
                 <i class="fa-solid fa-face-grin-wink fa-4x mb-3 text-white opacity-75"></i>
-                <h2 class="h3 fw-bold mb-3">Ein kleines Schlusswort an die Autorin</h2>
+                <h2 class="h3 fw-bold mb-3">Schlusswort des digitalen Korrektors</h2>
                 <p class="fs-5 fst-italic opacity-90" style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
-                    "Liebe Luisa, nach gefühlten 10.000 Zeilen Pilzkultur und statistischer Akrobatik sei mir ein kleines Schmunzeln gestattet: Wer es schafft, Herrn Hamdan in den Referenzen kreativ zu 'Had a m' umzutaufen und die 'fungitoxische' Wirkung versehentlich in 'fung i toxische' Einzelteile zu zerlegen, der hat wohl etwas zu lange in den Brutschrank gestarrt! 😉 <br>
-                    Aber keine Sorge: Mit diesen Korrekturen wird die Arbeit so steril und sauber wie eine frisch autoklavierte Petrischale. Viel Erfolg für die Verteidigung – und hoffentlich träumst du heute Nacht nicht von *Trichophyton indotineae*!"
+                    "Liebe Luisa, nach der Analyse von gefühlten 10.000 Zeilen Pilzkultur und statistischer Akrobatik muss ich doch schmunzeln: Wer es schafft, den geschätzten Herrn Hamdan in den Referenzen kreativ zu 'Had a m' umzutaufen und die 'fungitoxische' Wirkung versehentlich in 'fung i toxische' Einzelteile zu zerlegen, der hat wohl etwas zu lange in den Brutschrank gestarrt! 😉 <br><br>
+                    Aber im Ernst: Das ist Meckern auf hohem Niveau. Mit diesen Korrekturen wird die Arbeit so steril und sauber wie eine frisch autoklavierte Petrischale. Viel Erfolg für die Verteidigung – und hoffentlich träumst du heute Nacht nicht von *Trichophyton indotineae*!"
                 </p>
             </div>
         </section>
@@ -294,13 +320,13 @@
                 loc: 'Einleitung [542]',
                 err: 'T. indotinaea',
                 fix: 'T. indotineae',
-                why: 'Wissenschaftliche Exaktheit: Falsche Schreibweise der Spezies.'
+                why: 'Wissenschaftliche Exaktheit: Falsche Schreibweise der Spezies (ae statt ea).'
             },
             {
                 loc: 'Methoden [342]',
                 err: '( Adenosintriphosphat-Binding Cassette , ABC)',
                 fix: '(ATP-binding cassette, ABC)',
-                why: 'Sprach-Mischmasch: "Binding Cassette" ist englisch, "Adenosin..." deutsch. Einheitlich Englisch oder Deutsch.'
+                why: 'Sprach-Mischmasch: "Binding Cassette" ist englisch, "Adenosin..." deutsch. Einheitlich Englisch ist Standard.'
             },
             {
                 loc: 'Methoden [701]',
@@ -312,7 +338,7 @@
                 loc: 'Methoden [763-765]',
                 err: 'Doppelter Textblock (Copy-Paste)',
                 fix: 'Löschen',
-                why: 'Redundanz: Der Absatz zu Nenoff et al. steht doppelt im Text (S. 26).'
+                why: 'Redundanz: Der Absatz zu Nenoff et al. steht doppelt im Text (S. 26). Ein klassischer Copy-Paste Fehler.'
             },
             {
                 loc: 'Methoden [798]',
@@ -324,68 +350,165 @@
                 loc: 'Methoden [817]',
                 err: 'fung i toxische',
                 fix: 'fungitoxische',
-                why: 'Orthografie: Versehentliche Leerzeichen im Wort.'
+                why: 'Orthografie: Versehentliche Leerzeichen zerreißen das Wort.'
             },
             {
                 loc: 'Methoden [838]',
                 err: '-80°C',
                 fix: '-80 °C',
-                why: 'DIN 5008: Zwischen Zahl und Einheit muss ein Leerzeichen stehen.'
+                why: 'DIN 5008: Zwischen Zahl und Einheit muss zwingend ein geschütztes Leerzeichen stehen.'
             },
             {
                 loc: 'Methoden [842]',
                 err: 'Origin Pro 2023b; Studentenversion',
                 fix: 'OriginPro 2023b (OriginLab...)',
-                why: 'Professionalität: Lizenztyp "Student" gehört nicht in eine Publikation.'
+                why: 'Professionalität: Lizenztyp "Student" gehört nicht in eine Publikation, nur Hersteller und Ort.'
             },
             {
                 loc: 'Ergebnisse [917]',
                 err: 'T. interdigitlale',
                 fix: 'T. interdigitale',
-                why: 'Wissenschaftliche Exaktheit: Tippfehler im Speziesnamen.'
+                why: 'Wissenschaftliche Exaktheit: Tippfehler im Speziesnamen (l zu viel).'
             },
             {
                 loc: 'Ergebnisse [981]',
                 err: 'p < 0.001',
                 fix: 'p < 0,001',
-                why: 'Norm: Im deutschen Fließtext ist das Komma das Dezimaltrennzeichen.'
+                why: 'Norm: Im deutschen Fließtext ist das Komma das Dezimaltrennzeichen, der Punkt ist englisch.'
             },
             {
                 loc: 'Diskussion [1167]',
                 err: 'Santos und Had a m',
                 fix: 'Santos und Hamdan',
-                why: 'Zitiergenauigkeit: Der Name des Autors ist entstellt.'
+                why: 'Zitiergenauigkeit: Der Name des Autors ist entstellt. Das wirkt unseriös.'
             },
             {
                 loc: 'Diskussion [1251]',
                 err: '96,43 %',
                 fix: '96 %',
                 why: 'Statistik: Bei N=28 suggerieren zwei Nachkommastellen eine falsche Präzision (Scheingenauigkeit).'
+            },
+            {
+                loc: 'Diskussion [1339]',
+                err: 'ihr Anschaffung',
+                fix: 'ihre Anschaffung',
+                why: 'Grammatik: Kongruenzfehler (Genus).'
             }
         ];
 
         const literature = [
             "Adimi P, Hashemi SJ, Mahmoudi M, Mirhendi H, Shidfar MR, Emmami M, Rezaei-Matehkolaei A, Gramishoar M, Kordbacheh P. 2013. In-vitro activity of 10 antifungal agents against 320 dermatophyte strains using microdilution method in Tehran. Iran J Pharm Res, 12(3):537–545.",
             "Aneke C, Rhimi W, Otranto D, Cafarchia C. 2020. Comparative evaluation of E-test and CLSI methods for itraconazole, fluconazole and ketoconazole susceptibilities of Microsporum canis strains. Mycopathologia, 185(3):495–502.",
+            "Ansari S, Hedayati MT, Zomorodian K, Pakshir K, Badali H, Rafiei A, Ravandeh M, Seyedmousavi S. 2016. Molecular characterization and in vitro antifungal susceptibility of 316 clinical isolates of dermatophytes in Iran. Mycopathologia, 181(1–2):89–95.",
             "Arendrup MC, Kahlmeter G, Guinea J, Meletiadis J. 2021. How to: perform antifungal susceptibility testing of microconidia-forming dermatophytes following the new reference EUCAST method E.Def 11.0, exemplified by Trichophyton. Clin Microbiol Infect, 27(1):55–60.",
+            "Arias AF, Diaz A, Erdem G. 2021. Tinea faciei caused by Trichophyton benhamiae in a child. Pediatr Dermatol, 38:520–521.",
+            "Baert F, Stubbe D, D’hooge E, Packeu A, Hendrickx M. 2020. Updating the taxonomy of dermatophytes of the BCCM/IHEM collection according to the new standard: A phylogenetic approach. Mycopathologia, 185(1):161–168.",
             "Baghi N, Shokohi T, Badali H, Makimura K, Rezaei-Matehkolaei A, Abdollahi M, Didehdar M, Haghani I, Abastabar M. 2016. In vitro activity of new azoles luliconazole and lanoconazole compared with ten other antifungal drugs against clinical dermatophyte isolates. Med Mycol, 54(7):757–763.",
+            "Barchiesi F, Arzeni D, Camiletti V, Simonetti O, Cellini A, Offidani AM, Scalise G. 2001. In vitro activity of posaconazole against clinical isolates of dermatophytes. J Clin Microbiol, 39(11):4208–4209.",
             "Barros MEDS, Santos DA, Hamdan JS. 2007. Evaluation of susceptibility of Trichophyton mentagrophytes and Trichophyton rubrum clinical isolates to antifungal drugs using a modified CLSI microdilution method (M38-A). J Med Microbiol, 56(4):514–518.",
+            "Berkow EL, Lockhart SR, Ostrosky-Zeichner L. 2020. Antifungal susceptibility testing: current approaches. Clin Microbiol Rev, 33(3):e00069-19.",
             "Berstecher N, Burmester A, Gregersen DM, Tittelbach J, Wiegand C. 2024. Trichophyton indotineae Erg1Ala448Thr strain expressed constitutively high levels of sterol 14-α demethylase Erg11B mRNA, while transporter MDR3 and Erg11A mRNA expression was induced after addition of short chain azoles. J Fungi (Basel), 10(11):731.",
+            "Bishnoi A, Vinay K, Dogra S. 2018. Emergence of recalcitrant dermatophytosis in India. Lancet Infect Dis, 18(3):250–251.",
+            "Blanchard G, Amarov B, Fratti M, Salamin K, Bontems O, Chang YT, Sabou AM, Künzle N, Monod M, Guenova E. 2023. Reliable and rapid identification of terbinafine resistance in dermatophytic nail and skin infections. J Eur Acad Dermatol Venereol, 37(10):2080–2089.",
+            "Bland JM, Altman DG. 1986. Statistical methods for assessing agreement between two methods of clinical measurement. Lancet, 1(8476):307–310.",
+            "Brito-Santos F, Figueiredo-Carvalho MHG, Coelho RA, Sales A, Almeida-Paes R. 2017. Tinea capitis by Microsporum audouinii: case reports and review of published global literature 2000–2016. Mycopathologia, 182(11–12):1053–1060.",
             "Burmester A, Hipler UC, Hensche R, Elsner P, Wiegand C. 2019. Point mutations in the squalene epoxidase gene of Indian ITS genotype VIII T. mentagrophytes identified after DNA isolation from infected scales. Med Mycol Case Rep, 26:23–24.",
+            "Burmester A, Hipler UC, Uhrlaß S, Nenoff P, Singal A, Verma SB, Elsner P, Wiegand C. 2020. Indian Trichophyton mentagrophytes squalene epoxidase erg1 double mutants show high proportion of combined fluconazole and terbinafine resistance. Mycoses, 63(11):1175–1180.",
+            "Burmester A, Hipler UC, Elsner P, Wiegand C. 2022. Point mutations in the squalene epoxidase erg1 and sterol 14-α demethylase erg11 gene of T. indotineae isolates indicate that the resistant mutant strains evolved independently. Mycoses, 65:97–102.",
+            "Cammarata E, Di Cristo N, Airoldi C, Veronese F, Esposto E, Giacomazzi C, Coppo P, Zavattaro E, Savoia P. 2024. Trichophyton erinacei infection in humans: a case report and a literature review. J Dtsch Dermatol Ges, 22(10):1337–1342.",
+            "Cervelatti EP, Fachin AL, Ferreira-Nozawa MS, Martinez-Rossi NM. 2006. Molecular cloning and characterization of a novel ABC transporter gene in the human pathogen Trichophyton rubrum. Med Mycol, 44(2):141–147.",
+            "Chadeganipour M, Nilipour S, Havaei A. 2004. In vitro evaluation of griseofulvin against clinical isolates of dermatophytes from Isfahan. Mycoses, 47(11–12):503–507.",
             "Clinical and Laboratory Standards Institute. 2008. Reference Method for Broth Dilution Antifungal Susceptibility Testing of Filamentous Fungi; Approved Standard – Second Edition. CLSI document M38-A2. Wayne, PA: Clinical and Laboratory Standards Institute.",
+            "Coulibaly O, L'Ollivier C, Piarroux R, Ranque S. 2018. Epidemiology of human dermatophytoses in Africa. Med Mycol, 56(2):145–161.",
+            "Curatolo R, Juricevic N, Leong C, Bosshard PP. 2021. Antifungal susceptibility testing of dermatophytes: development and evaluation of an optimised broth microdilution method. Mycoses, 64:282–291.",
+            "de Hoog GS, Dukik K, Monod M, Packeu A, Stubbe D, Hendrickx M, Kupsch C, Stielow JB, Freeke J, Göker M, Rezaei-Matehkolaei A, Mirhendi H, Gräser Y. 2017. Toward a novel multilocus phylogenetic taxonomy for the dermatophytes. Mycopathologia, 182(1–2):5–31.",
+            "Denning DW, Radford SA, Oakley KL, Hall L, Johnson EM, Warnock DW. 1997. Correlation between in vitro susceptibility testing to itraconazole and in vivo outcome of Aspergillus fumigatus infection. J Antimicrob Chemother, 40(3):401–414.",
+            "Dogra S, Shaw D, Rudramurthy SM. 2019. Antifungal drug susceptibility testing of dermatophytes: Laboratory findings to clinical implications. Indian Dermatol Online J, 10(3):225–233.",
+            "Duek L, Kaufman G, Ulman Y, Berdicevsky I. 2004. The pathogenesis of dermatophyte infections in human skin sections. J Infect, 48(2):175–180.",
+            "Dunn OJ. 1964. Multiple comparisons using rank sums. Technometrics, 6(3):241–252.",
             "Ebert A, Monod M, Salamin K, Burmester A, Uhrlaß S, Wiegand C, Hipler UC, Krüger C, Koch D, Wittig F, Verma SB, Singal A, Gupta S, Vasani R, Saraswat A, Madhu R, Panda S, Das A, Kura MM, Kumar A, Poojary S, Schirm S, Gräser Y, Paasch U, Nenoff P. 2020. Alarming India-wide phenomenon of antifungal resistance in dermatophytes: A multicentre study. Mycoses, 63(7):717–728.",
+            "European Committee on Antimicrobial Susceptibility Testing. 2020. EUCAST definitive document E.DEF 9.3.2: Method for the determination of broth dilution minimum inhibitory concentrations of antifungal agents for conidia-forming moulds. Växjö, Sweden: EUCAST.",
+            "European Committee on Antimicrobial Susceptibility Testing. 2022. EUCAST definitive document E.DEF 9.4: Method for the determination of broth dilution minimum inhibitory concentrations of antifungal agents for conidia-forming moulds. Växjö, Sweden: EUCAST.",
+            "Fernández-Torres B, Cabañes FJ, Carrillo-Muñoz AJ, Esteban A, Inza I, Abarca L, Guarro J. 2002. Collaborative evaluation of optimal antifungal susceptibility testing conditions for dermatophytes. J Clin Microbiol, 40(11):3999–4003.",
+            "Fink S, Burmester A, Hipler UC, Neumeister C, Götz MR, Wiegand C. 2022. Efficacy of antifungal agents against fungal spores: An in vitro study using microplate laser nephelometry and an artificially infected 3D skin model. MicrobiologyOpen, 11(1):e1257.",
+            "Friedman M. 1937. The use of ranks to avoid the assumption of normality implicit in the analysis of variance. J Am Stat Assoc, 32(200):675–701.",
+            "Gadzalski M, Ciesielska A, Stączek P. 2016. Bioinformatic survey of ABC transporters in dermatophytes. Gene, 576(1):466–475.",
+            "Gedek B. 2007. Allgemeine Mykologie: Wachstum und Wachstumsbedingungen. In: Mayr A, Hrsg. Medizinische Mikrobiologie, Infektions- und Seuchenlehre. 8. Aufl. Stuttgart: Georg Thieme Verlag, 567–570.",
+            "Georg LK, Camp LB. 1957. Routine nutritional tests for the identification of dermatophytes. J Bacteriol, 74(2):113–121.",
+            "Giavarina D. 2015. Understanding Bland–Altman analysis. Biochem Med (Zagreb), 25(2):141–151.",
+            "Gräser Y, Czaika V, Ohst T. 2012. Diagnostic PCR of dermatophytes – an overview. J Dtsch Dermatol Ges, 10(10):721–726.",
+            "Gupta AK, Cooper EA, Wang T, Polla Ravi S, Lincoln SA, Piguet V, McCarthy LR, Bakotic WL. 2023. Detection of squalene epoxidase mutations in United States patients with onychomycosis: Implications for management. J Invest Dermatol, 143(12):2476–2483.",
+            "Gupta AK, Talukder M, Shemer A, Galili E. 2024. Safety and efficacy of new generation azole antifungals in the management of recalcitrant superficial fungal infections and onychomycosis. Expert Rev Anti Infect Ther, 22(6):399–412.",
+            "Havlickova B, Czaika VA, Friedrich M. 2008. Epidemiological trends in skin mycoses worldwide. Mycoses, 51(Suppl 4):2–15.",
+            "Hipler B, Brand S, Angersbach S, Rückert C. 2003. Monitoring des Wachstums von Mikroorganismen mit Hilfe der Nephelometrie. Biospektrum, 9(5):648–649.",
+            "Hiruma J, Noguchi H, Hase M, Tokuhisa Y, Shimizu T, Ogawa T, Hiruma M, Harada K, Kano R. 2021. Epidemiological study of terbinafine-resistant dermatophytes isolated from Japanese patients. J Dermatol, 48:564–567.",
+            "Hiruma J, Noguchi H, Shimizu T, Hiruma M, Harada K, Kano R. 2023. Epidemiological study of antifungal-resistant dermatophytes isolated from Japanese patients. J Dermatol, 50:1068–1071.",
+            "Hitchcock CA, Sibley CM. 1999. Current and emerging azole antifungal agents. Clin Microbiol Rev, 12(1):46–89.",
+            "Hryncewicz-Gwóźdź A, Kalinowska K, Plomer-Niezgoda E, Bielecki J, Jagielski T. 2013. Increase in resistance to fluconazole and itraconazole in Trichophyton rubrum clinical isolates by sequential passages in vitro under drug pressure. Mycopathologia, 176(1–2):49–55.",
+            "Jacob TR, Peres NT, Martins MP, Lang EA, Sanches PR, Rossi A, Martinez-Rossi NM. 2015. Heat shock protein 90 (Hsp90) as a molecular target for the development of novel drugs against the dermatophyte Trichophyton rubrum. Front Microbiol, 6:1241.",
+            "Jagdale SK, Nawale RB. 2019. Solubilization and determination of solution thermodynamic properties of itraconazole in different solvents at different temperatures. Drug Dev Ind Pharm, 45(7):1168–1180.",
+            "Jensen RH, Arendrup MC. 2012. Molecular diagnosis of dermatophyte infections. Curr Opin Infect Dis, 25(2):126–134.",
+            "Johnson EM, Richardson MD, Warnock DW. 1984. In-vitro resistance to imidazole antifungals in Candida albicans. J Antimicrob Chemother, 13:547–558.",
+            "Joubert A, Calmes B, Berruyer R, Pihet M, Bouchara JP, Simoneau P, Guillemette T. 2010. Laser nephelometry applied in an automated microplate system to study filamentous fungus growth. Biotechniques, 48(5):399–404.",
+            "Kahlmeter G, Turnidge J. 2023. Wild-type distributions of minimum inhibitory concentrations and epidemiological cut-off values-laboratory and clinical utility. Clin Microbiol Rev, 36(4):e0010022.",
+            "Khurana A, Masih A, Chowdhary A, Sardana K, Borker S, Gupta A, Gautam RK, Sharma PK, Jain D. 2018. Correlation of in vitro susceptibility based on MICs and squalene epoxidase mutations with clinical response to terbinafine in patients with Tinea Corporis/Cruris. Antimicrob Agents Chemother, 62(12):e01038-18.",
+            "Khurana A, Sardana K, Chowdhary A. 2019. Antifungal resistance in dermatophytes: Recent trends and therapeutic implications. Fungal Genet Biol, 132:103255.",
+            "Kolb-Mäurer A, Kurzai O. 2020. Dermatophyten. In: Suerbaum S, Burchard G, Kaufmann S, Schulz T, Hrsg. Medizinische Mikrobiologie und Infektiologie. 9. Aufl. Springer Nature, 845–850.",
+            "Kovitwanichkanont T, Chong AH. 2019. Superficial fungal infections. Aust J Gen Pract, 48(10):706–711.",
+            "Krauße L, Burmester A, Uhrlaß S, Fabri M, Nenoff P, Tittelbach J, Wiegand C. 2025. Significant impact of growth medium on itraconazole susceptibility in azole-resistant versus wild-type Trichophyton indotineae, rubrum, and quinckeanum isolates. Int J Mol Sci, 26(15):7090.",
+            "Maertens JA. 2004. History of the development of azole derivatives. Clin Microbiol Infect, 10(Suppl 1):1–10.",
+            "Marr KA, Rustad TR, Rex JH, White TC. 1999. The trailing end point phenotype in antifungal susceptibility testing is pH dependent. Antimicrob Agents Chemother, 43(6):1383–1386.",
+            "Martinez-Rossi NM, Jacob TR, Sanches PR, Peres NT, Lang EA, Martins MP, Rossi A. 2016. Heat shock proteins in dermatophytes: Current advances and perspectives. Curr Genomics, 17(2):99–111.",
+            "Mast N, Zheng W, Stout CD, Pikuleva IA. 2013. Antifungal Azoles: Structural Insights into Undesired Tight Binding to Cholesterol-Metabolizing CYP46A1. Mol Pharmacol, 84(1):86–94.",
+            "Maurya K, Raj N, Kumar Singh A, Das A, Sen M, Garg J, Agarwal J. 2024. A Road Less Traveled: E-test Method for Antifungal Susceptibility Testing in Trichophyton mentagrophyte Isolates Among Patients Presenting With Dermatophytosis at a Tertiary Healthcare Center in North India. Cureus, 16(6):e62047.",
+            "Mayser P. 2018. Mykosen. In: Plewig G, Ruzicka T, Kaufmann R, Hertl M, Hrsg. Braun-Falco’s Dermatologie, Venerologie und Allergologie. 7. Aufl. Springer Nature, 261–297.",
+            "Mayser P, Nenoff P, Reinel D, Abeck D, Brasch J, Daeschlein G, Effendy I, Ginter-Hanselmayer G, Gräser Y, Hipler UC, Höger P, Kolb-Mäurer A, Ott H, Schaller M, Zidane M. 2020. S1-Leitlinie Tinea capitis. J Dtsch Dermatol Ges, 18:161–180.",
+            "Mercer DK, Stewart CS. 2019. Keratin hydrolysis by dermatophytes. Med Mycol, 57(1):13–22.",
             "Misra R, Malik A, Singhal S. 2011. Comparison of the activities of amphotericin B, itraconazole, and voriconazole against clinical and environmental isolates of Aspergillus species. Indian J Pathol Microbiol, 54(1):112–116.",
+            "Monod M. 2008. Secreted Proteases from Dermatophytes. Mycopathologia, 166(5-6):285–294.",
+            "Moskaluk A, Darlington L, Kuhn S, Behzadi E, Gagne RB, Kozakiewicz CP, VandeWoude S. 2022. Genetic Characterization of Microsporum canis Clinical Isolates in the United States. J Fungi (Basel), 8(7):676.",
+            "Mushtaq S, Faizi N, Amin SS, Adil M, Mohtashim M. 2020. Impact on quality of life in patients with dermatophytosis. Australas J Dermatol, 61:e184–e188.",
             "Nenoff P, Krüger C, Schaller J, Ginter-Hanselmayer G, Schulte-Beerbühl R, Tietz HJ. 2014. Mykologie – ein Update Teil 2: Dermatomykosen: Klinisches Bild und Diagnostik. J Dtsch Dermatol Ges, 12(8):749-779.",
+            "Nenoff P, Krüger C, Paasch U, Ginter-Hanselmayer G. 2015. Mycology – an update Part 3: Dermatomycoses: topical and systemic therapy. J Dtsch Dermatol Ges, 13(5):387–411.",
+            "Nenoff P, Verma SB, Uhrlaß S, Burmester A, Gräser Y. 2019. A clarion call for preventing taxonomical errors of dermatophytes using the example of the novel Trichophyton mentagrophytes genotype VIII uniformly isolated in the Indian epidemic of superficial dermatophytosis. Mycoses, 62(1):6–10.",
             "Nenoff P, Verma SB, Ebert A, Süß A, Fischer E, Auerswald E, Dessoi S, Hofmann W, Schmidt S, Neubert K, Renner R, Sohl S, Hradetzky U, Krusche U, Wenzel HC, Staginnus A, Schaller J, Müller V, Tauer C, Gebhardt M, Uhrlaß S. 2020. Spread of Terbinafine-resistant Trichophyton mentagrophytes Type VIII (India) in Germany – “The Tip of the Iceberg?”. J Fungi (Basel), 6(4):207.",
+            "Nenoff P, Stahl M, Schaller M, Burmester A, Monod M, Ebert A, Uhrlaß S. 2023. Rezidivierende Tinea corporis generalisata durch einen Terbinafin-resistenten Trichophyton rubrum-Stamm: Langzeitbehandlung mit Super-Bioavailability-Itraconazol. Dermatologie (Heidelb), 74(11):864–873.",
             "Norris HA, Elewski BE, Ghannoum MA. 1999. Optimal growth conditions for the determination of the antifungal susceptibility of three species of dermatophytes with the use of a microdilution method. J Am Acad Dermatol, 40(6 Suppl):S9–S13.",
-            "Santos DA, Hamdan JS. 2005. Evaluation of broth microdilution antifungal susceptibility testing conditions for Trichophyton rubrum. J Clin Microbiol, 43(4):1917–1920."
+            "Parikh JR, Desai PB, Captain AD, Patel MS. 2011. Development and validation of UV-spectrophotometric method for the estimation of itraconazole in bulk and pharmaceutical formulations. Pharm Methods, 2(1):46–49.",
+            "Patel NH, Sardana K, Shenoy MM, Rengasamy M, Khurana A, Ghate S, Venkata CK, Marfatiya Y, Bhunia D, Jayaraman J, Das A, Jain AK. 2023. IADVL SIG Recalcitrant Dermatophytosis Position Statement on Super Bioavailable Itraconazole. Indian Dermatol Online J, 15(1):1–7.",
+            "Peres NT, Sanches PR, Falcão JP, Silveira HC, Fernanades LD, Rossi A, Martinez-Rossi NM. 2010. Transcriptional profiling reveals the expression of novel genes in response to various stimuli in the human dermatophyte Trichophyton rubrum. BMC Microbiol, 10:39.",
+            "Rajamohanan R, Raj R, Chellam J, Rengasamy M. 2021. Epidemiological trends and clinicomycological profile of chronic dermatophytosis: A descriptive study from South India. Indian J Dermatol, 66(4):445.",
+            "Rambali B, Fernandez JA, Van Nuffel L, Woestenborghs F, Baert L, Massart DL, Odds FC. 2001. Susceptibility testing of pathogenic fungi with itraconazole: A process analysis of test variables. J Antimicrob Chemother, 48(2):163–177.",
+            "Rouzaud C, Hay R, Chosidow O, Dupin N, Puel A, Lortholary O, Lanternier F. 2016. Severe dermatophytosis and acquired or innate immunodeficiency: A review. J Fungi (Basel), 2(1):4.",
+            "Rudramurthy SM, Shankarnarayan SA, Dogra S, Shaw D, Mushtaq K, Paul RA, Narang T, Chakrabarti A. 2018. Mutation in the squalene epoxidase gene of Trichophyton interdigitale and Trichophyton rubrum associated with allylamine resistance. Antimicrob Agents Chemother, 62(5):e02522-17.",
+            "Ryder NS. 1992. Terbinafine: Mode of action and properties of the squalene epoxidase inhibition. Br J Dermatol, 126(Suppl 39):2–7.",
+            "Sacheli R, Hayette MP. 2021. Antifungal resistance in dermatophytes: Genetic considerations, clinical presentations and alternative therapies. J Fungi (Basel), 7(11):983.",
+            "Santos DA, Hamdan JS. 2005. Evaluation of broth microdilution antifungal susceptibility testing conditions for Trichophyton rubrum. J Clin Microbiol, 43(4):1917–1920.",
+            "Shapiro SS, Wilk MB. 1965. An analysis of variance test for normality (complete samples). Biometrika, 52(3–4):591–611.",
+            "Shen JJ, Arendrup MC, Verma S, Saunte DML. 2022. The emerging terbinafine-resistant Trichophyton epidemic: What is the role of antifungal susceptibility testing? Dermatology, 238(1):60–79.",
+            "Silva LB, de Oliveira DB, da Silva BV, de Souza RA, da Silva PR, Ferreira-Paim K, Andrade-Silva LE, Silva-Vergara ML, Andrade AA. 2014. Identification and antifungal susceptibility of fungi isolated from dermatomycoses. J Eur Acad Dermatol Venereol, 28(5):633–640.",
+            "Singh A, Masih A, Khurana A, Singh PK, Gupta M, Hagen F, Meis JF, Chowdhary A. 2018. High terbinafine resistance in Trichophyton interdigitale isolates in Delhi, India harbouring mutations in the squalene epoxidase gene. Mycoses, 61(7):477–484.",
+            "Siopi M, Efstathiou I, Arendrup MC, Meletiadis J. 2024. Development of an agar-based screening method for terbinafine, itraconazole, and amorolfine susceptibility testing of Trichophyton spp. J Clin Microbiol, 62(1):e01308-23.",
+            "Tang C, Kong X, Ahmed SA, Thakur R, Chowdhary A, Nenoff P, Uhrlaß S, Verma SB, Meis JF, Kandemir H, Kang Y, de Hoog GS. 2021. Taxonomy of the Trichophyton mentagrophytes/T. interdigitale species complex harboring the highly virulent, multiresistant genotype T. indotineae. Mycopathologia, 186(3):315–326.",
+            "Thatai P, Sapra B. 2016. Critical review on retrospective and prospective changes in antifungal susceptibility testing for dermatophytes. Mycoses, 59:615–627.",
+            "Uhrlaß S, Verma SB, Gräser Y, Rezaei-Matehkolaei A, Hatami M, Schaller M, Nenoff P. 2022. Trichophyton indotineae – An emerging pathogen causing recalcitrant dermatophytoses in India and worldwide – A multidimensional perspective. J Fungi (Basel), 8(7):757.",
+            "Verma SB, Panda S, Nenoff P, Singal A, Rudramurthy SM, Uhrlaß S, Das S, Bisherwal K, Shaw D, Vasani R. 2021. The unprecedented epidemic-like scenario of dermatophytosis in India: I. Epidemiology, risk factors and clinical features. Indian J Dermatol Venereol Leprol, 87:154–175.",
+            "Wiegand C, Hipler UC, Burmester A, Gräser Y, Tittelbach J, Elsner P. 2016. Molekulare Diagnostik von Pilzinfektionen der Haut und Nägel. Hautarzt, 67(12):966–977.",
+            "Wilcoxon F. 1945. Individual comparisons by ranking methods. Biometrics Bull, 1(6):80.",
+            "Winter P, Burmester A, Tittelbach J, Wiegand C. 2023. A new genotype of Trichophyton quinckeanum with point mutations in Erg11A encoding sterol 14-α-demethylase exhibits increased itraconazole resistance. J Fungi (Basel), 9(10):1006.",
+            "Yamada T, Maeda M, Alshahni MM, Tanaka R, Yaguchi T, Bontems O, Salamin K, Fratti M, Monod M. 2017. Terbinafine resistance of Trichophyton clinical isolates caused by specific point mutations in the squalene epoxidase gene. Antimicrob Agents Chemother, 61(7):e00115-17.",
+            "Yamada T, Yaguchi T, Tamura T, Pich C, Salamin K, Feuermann M, Monod M. 2021. Itraconazole resistance of Trichophyton rubrum mediated by the ABC transporter TruMDR2. Mycoses, 64(8):936–946.",
+            "Yamada T, Yaguchi T, Maeda M, Alshahni MM, Salamin K, Guenova E, Feuermann M, Monod M. 2022. Gene amplification of CYP51B : a new mechanism of resistance to azole compounds in Trichophyton indotineae. Antimicrob Agents Chemother, 66(6):e0005922.",
+            "Yamada T, Yaguchi T, Maeda M, et al. 2024. Two types of CYP51B tandem repeat responsible for azole resistance in Trichophyton indotineae. Med Mycol, 62(1):myad143.",
+            "Yin X, Daintree LS, Ding S, Ledger DM, Wang B, Zhao W, Qi J, Wu W, Han J. 2015. Itraconazole solid dispersion prepared by a supercritical fluid technique: preparation, in vitro characterization, and bioavailability in beagle dogs. Drug Des Devel Ther, 9:2801–2810.",
+            "Zalacain A, Obrador C, Martinez JP, Viñas M, Vinuesa T. 2011. Characterization of the antimicrobial susceptibility of fungi responsible for onychomycosis in Spain. Med Mycol, 49(5):495–499."
         ];
 
         // --- Render Functions ---
         function renderText() {
             const container = document.getElementById('text-grid');
             container.innerHTML = corrections.map(c => `
-                <div class="col-md-6" data-aos="fade-up">
+                <div class="col-lg-6" data-aos="fade-up">
                     <div class="issue-card p-4">
                         <div class="d-flex justify-content-between mb-2">
                             <span class="status-badge bg-warn-light text-warning">Korrektur</span>
@@ -431,7 +554,7 @@
 
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            alert("Referenz kopiert!");
+            alert("In die Zwischenablage kopiert!");
         }
 
         // Init
