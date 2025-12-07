@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASTER AUDIT + | Dissertation L. Krauße</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* PAPER THEME - MAXIMUM READABILITY */
+            --bg-body: #f3f4f6;       
+            --bg-paper: #ffffff;
+            --text-main: #111827;     /* Fast Schwarz */
+            --text-sec: #4b5563;      /* Dunkles Grau */
+            
+            /* Semantic Colors (High Contrast) */
+            --col-err: #dc2626;       /* Rot */
+            --bg-err: #fef2f2;
+            --col-fix: #16a34a;       /* Grün */
+            --bg-fix: #f0fdf4;
+            --col-info: #2563eb;      /* Blau */
+            --col-warn: #d97706;      /* Orange */
+
+            --font-ui: 'Inter', sans-serif;
+            --font-read: 'Merriweather', serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* --- Layout Elements --- */
+        .paper-sheet {
+            background: var(--bg-paper);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 2rem;
+            padding: 2rem;
+        }
+
+        .navbar {
+            background: #fff;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h1, h2, h3, h4 { letter-spacing: -0.025em; color: #000; }
+
+        /* --- Correction Cards --- */
+        .issue-card {
+            border-left: 6px solid transparent;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            transition: all 0.2s;
+            height: 100%;
+        }
+        .issue-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        
+        .border-crit { border-left-color: var(--col-err); }
+        .border-warn { border-left-color: var(--col-warn); }
+        
+        /* --- Badge & Labels --- */
+        .status-badge {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+        .bg-crit-light { background: var(--bg-err); color: var(--col-err); }
+        .bg-warn-light { background: #fffbeb; color: var(--col-warn); }
+
+        /* --- Context/Diff View --- */
+        .context-wrapper {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: var(--font-read);
+            font-size: 1rem;
+            color: var(--text-sec);
+        }
+        
+        .marker-err {
+            background: #fee2e2;
+            color: #991b1b;
+            text-decoration: line-through;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 8px;
+            font-family: var(--font-code);
+            font-size: 0.9em;
+        }
+        
+        .marker-fix {
+            background: #dcfce7;
+            color: #166534;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border-bottom: 2px solid var(--col-fix);
+            font-style: normal;
+        }
+
+        .reason-box {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #d1d5db;
+            font-size: 0.9rem;
+            color: #374151;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        /* --- Literature --- */
+        .lit-row {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .lit-row:hover { background-color: #f3f4f6; }
+        .lit-author { font-weight: 700; color: #000; }
+        .lit-journal { color: var(--col-info); font-style: italic; }
+
+        /* --- Fun Section --- */
+        .fun-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-clipboard-check me-2 text-success"></i>AUDIT MANAGER</a>
+            <div class="d-flex gap-3">
+                <a href="#structural" class="fw-bold text-decoration-none text-danger">1. Struktur</a>
+                <a href="#text" class="fw-bold text-decoration-none text-warning">2. Text</a>
+                <a href="#lit" class="fw-bold text-decoration-none text-primary">3. Literatur</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        
+        <div class="paper-sheet" data-aos="fade-up">
+            <h1 class="display-6 fw-bold mb-2">Korrekturbericht: Luisa Krauße</h1>
+            <p class="text-secondary mb-0">Status: <strong>Final & Kritisch geprüft</strong>. Enthält Begründungen für jede Änderung.</p>
+        </div>
+
+        <section id="structural" class="mb-5">
+            <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-danger"><i class="fa-solid fa-sitemap me-2"></i>I. Kritische Strukturfehler</h3>
+            
+            <div class="row g-4">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="issue-card p-4 border-start border-5 border-danger">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="status-badge bg-crit-light">Logik-Fehler</span>
+                            <small class="font-monospace text-secondary">[Seite 24/25]</small>
+                        </div>
+                        <h4 class="h5 fw-bold">Doppelte Kapitelnummerierung (2.1.1)</h4>
+                        
+                        <div class="context-wrapper bg-white">
+                            <div class="row">
+                                <div class="col-md-6 border-end">
+                                    <div class="small text-uppercase text-danger fw-bold mb-2">Ist-Zustand</div>
+                                    <p class="mb-1 text-danger">2.1.1 Verbrauchsmaterialien (Tab. 5)</p>
+                                    <p class="mb-0 text-danger">2.1.1 Chemikalien (Tab. 4)</p>
+                                </div>
+                                <div class="col-md-6 ps-md-4">
+                                    <div class="small text-uppercase text-success fw-bold mb-2">Soll-Zustand</div>
+                                    <p class="mb-1 text-success fw-bold">2.1.1 Chemikalien (Tab. 4)</p>
+                                    <p class="mb-0 text-success fw-bold">2.1.2 Verbrauchsmaterialien (Tab. 5)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reason-box">
+                            <i class="fa-solid fa-circle-info text-primary mt-1"></i>
+                            <div>
+                                <strong>Begründung:</strong> Die Tabellen müssen im Text chronologisch nummeriert sein (Tabelle 4 vor 5). Aktuell erscheint Tabelle 5 im ersten Kapitel 2.1.1 vor Tabelle 4 im zweiten Kapitel 2.1.1. Dies verletzt die logische Struktur wissenschaftlicher Arbeiten.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="issue-card p-4 border-start border-5 border-danger h-100">
+                        <span class="status-badge bg-crit-light mb-3 d-inline-block">Formalie (Muss)</span>
+                        <h5 class="fw-bold">Gender-Erklärung fehlt</h5>
+                        <div class="context-wrapper mt-3">
+                            <span class="marker-fix text-success">"Zur besseren Lesbarkeit wird in dieser Dissertation das generische Maskulinum verwendet..."</span>
+                        </div>
+                        <div class="reason-box">
+                            <i class="fa-solid fa-book text-primary mt-1"></i>
+                            <div><strong>Begründung:</strong> Der <code>Leitfaden S. 1</code> fordert diesen Satz explizit. Ohne diesen Hinweis kann die Arbeit wegen Formmangels zurückgewiesen werden.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="issue-card p-4 border-start border-5 border-danger h-100">
+                        <span class="status-badge bg-crit-light mb-3 d-inline-block">Veraltete Begriffe</span>
+                        <h5 class="fw-bold">Eidesstattliche Versicherung</h5>
+                        <div class="context-wrapper mt-3">
+                            Alt: <span class="marker-err">Ehrenwörtliche Erklärung</span><br>
+                            Neu: <span class="marker-fix">Eidesstattliche Versicherung</span>
+                        </div>
+                        <div class="reason-box">
+                            <i class="fa-solid fa-book text-primary mt-1"></i>
+                            <div><strong>Begründung:</strong> Laut <code>Leitfaden S. 5 und 8</code> ist "Ehrenwörtliche Erklärung" nicht mehr der korrekte Terminus. Es handelt sich um ein Rechtsdokument.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="text" class="mb-5">
+            <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-warning"><i class="fa-solid fa-spell-check me-2"></i>II. Text & Mikro-Typografie</h3>
+            <p class="text-secondary mb-4">Suche per Strg+F nach den roten Markierungen im Word-Dokument.</p>
+            
+            <div id="text-grid" class="row g-4">
+                </div>
+        </section>
+
+        <section id="lit" class="mb-5">
+            <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-primary"><i class="fa-solid fa-book me-2"></i>III. Literaturverzeichnis</h3>
+            
+            <div class="paper-sheet p-0 overflow-hidden">
+                <div class="bg-light p-3 border-bottom d-flex justify-content-between align-items-center">
+                    <small class="fw-bold text-secondary"><i class="fa-solid fa-check me-1"></i>Jena-Standard: Index Medicus Abk., keine Punkte, alle Autoren.</small>
+                    <input type="text" id="litSearch" class="form-control form-control-sm w-auto" placeholder="Referenz suchen...">
+                </div>
+                <div id="lit-container" style="max-height: 600px; overflow-y: auto;">
+                    </div>
+            </div>
+        </section>
+
+        <section class="mt-5 pt-5" data-aos="zoom-in">
+            <div class="fun-section">
+                <i class="fa-solid fa-face-grin-wink fa-4x mb-3 text-white opacity-75"></i>
+                <h2 class="h3 fw-bold mb-3">Ein kleines Schlusswort an die Autorin</h2>
+                <p class="fs-5 fst-italic opacity-90" style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                    "Liebe Luisa, nach gefühlten 10.000 Zeilen Pilzkultur und statistischer Akrobatik sei mir ein kleines Schmunzeln gestattet: Wer es schafft, Herrn Hamdan in den Referenzen kreativ zu 'Had a m' umzutaufen und die 'fungitoxische' Wirkung versehentlich in 'fung i toxische' Einzelteile zu zerlegen, der hat wohl etwas zu lange in den Brutschrank gestarrt! 😉 <br>
+                    Aber keine Sorge: Mit diesen Korrekturen wird die Arbeit so steril und sauber wie eine frisch autoklavierte Petrischale. Viel Erfolg für die Verteidigung – und hoffentlich träumst du heute Nacht nicht von *Trichophyton indotineae*!"
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        AOS.init();
+
+        // --- Data ---
+        const corrections = [
+            {
+                loc: 'Einleitung [191]',
+                err: '1. Einleitung',
+                fix: '1 Einleitung',
+                why: 'Muster-Vorgabe (Leitfaden S. 2): Keine Punkte nach der ersten Gliederungsebene.'
+            },
+            {
+                loc: 'Einleitung [203]',
+                err: 'Microsporum , Trichophyton ,',
+                fix: 'Microsporum, Trichophyton,',
+                why: 'Typografie ("Plenk"): Kein Leerzeichen vor einem Komma.'
+            },
+            {
+                loc: 'Einleitung [542]',
+                err: 'T. indotinaea',
+                fix: 'T. indotineae',
+                why: 'Wissenschaftliche Exaktheit: Falsche Schreibweise der Spezies.'
+            },
+            {
+                loc: 'Methoden [342]',
+                err: '( Adenosintriphosphat-Binding Cassette , ABC)',
+                fix: '(ATP-binding cassette, ABC)',
+                why: 'Sprach-Mischmasch: "Binding Cassette" ist englisch, "Adenosin..." deutsch. Einheitlich Englisch oder Deutsch.'
+            },
+            {
+                loc: 'Methoden [701]',
+                err: 'Biometrieux',
+                fix: 'bioMérieux',
+                why: 'Fakt: Der Firmenname ist falsch geschrieben.'
+            },
+            {
+                loc: 'Methoden [763-765]',
+                err: 'Doppelter Textblock (Copy-Paste)',
+                fix: 'Löschen',
+                why: 'Redundanz: Der Absatz zu Nenoff et al. steht doppelt im Text (S. 26).'
+            },
+            {
+                loc: 'Methoden [798]',
+                err: '0,0652',
+                fix: '0,0625',
+                why: 'Logik/Mathematik: Die Hälfte von 0,125 ist 0,0625. Zahlendreher.'
+            },
+            {
+                loc: 'Methoden [817]',
+                err: 'fung i toxische',
+                fix: 'fungitoxische',
+                why: 'Orthografie: Versehentliche Leerzeichen im Wort.'
+            },
+            {
+                loc: 'Methoden [838]',
+                err: '-80°C',
+                fix: '-80 °C',
+                why: 'DIN 5008: Zwischen Zahl und Einheit muss ein Leerzeichen stehen.'
+            },
+            {
+                loc: 'Methoden [842]',
+                err: 'Origin Pro 2023b; Studentenversion',
+                fix: 'OriginPro 2023b (OriginLab...)',
+                why: 'Professionalität: Lizenztyp "Student" gehört nicht in eine Publikation.'
+            },
+            {
+                loc: 'Ergebnisse [917]',
+                err: 'T. interdigitlale',
+                fix: 'T. interdigitale',
+                why: 'Wissenschaftliche Exaktheit: Tippfehler im Speziesnamen.'
+            },
+            {
+                loc: 'Ergebnisse [981]',
+                err: 'p < 0.001',
+                fix: 'p < 0,001',
+                why: 'Norm: Im deutschen Fließtext ist das Komma das Dezimaltrennzeichen.'
+            },
+            {
+                loc: 'Diskussion [1167]',
+                err: 'Santos und Had a m',
+                fix: 'Santos und Hamdan',
+                why: 'Zitiergenauigkeit: Der Name des Autors ist entstellt.'
+            },
+            {
+                loc: 'Diskussion [1251]',
+                err: '96,43 %',
+                fix: '96 %',
+                why: 'Statistik: Bei N=28 suggerieren zwei Nachkommastellen eine falsche Präzision (Scheingenauigkeit).'
+            }
+        ];
+
+        const literature = [
+            "Adimi P, Hashemi SJ, Mahmoudi M, Mirhendi H, Shidfar MR, Emmami M, Rezaei-Matehkolaei A, Gramishoar M, Kordbacheh P. 2013. In-vitro activity of 10 antifungal agents against 320 dermatophyte strains using microdilution method in Tehran. Iran J Pharm Res, 12(3):537–545.",
+            "Aneke C, Rhimi W, Otranto D, Cafarchia C. 2020. Comparative evaluation of E-test and CLSI methods for itraconazole, fluconazole and ketoconazole susceptibilities of Microsporum canis strains. Mycopathologia, 185(3):495–502.",
+            "Arendrup MC, Kahlmeter G, Guinea J, Meletiadis J. 2021. How to: perform antifungal susceptibility testing of microconidia-forming dermatophytes following the new reference EUCAST method E.Def 11.0, exemplified by Trichophyton. Clin Microbiol Infect, 27(1):55–60.",
+            "Baghi N, Shokohi T, Badali H, Makimura K, Rezaei-Matehkolaei A, Abdollahi M, Didehdar M, Haghani I, Abastabar M. 2016. In vitro activity of new azoles luliconazole and lanoconazole compared with ten other antifungal drugs against clinical dermatophyte isolates. Med Mycol, 54(7):757–763.",
+            "Barros MEDS, Santos DA, Hamdan JS. 2007. Evaluation of susceptibility of Trichophyton mentagrophytes and Trichophyton rubrum clinical isolates to antifungal drugs using a modified CLSI microdilution method (M38-A). J Med Microbiol, 56(4):514–518.",
+            "Berstecher N, Burmester A, Gregersen DM, Tittelbach J, Wiegand C. 2024. Trichophyton indotineae Erg1Ala448Thr strain expressed constitutively high levels of sterol 14-α demethylase Erg11B mRNA, while transporter MDR3 and Erg11A mRNA expression was induced after addition of short chain azoles. J Fungi (Basel), 10(11):731.",
+            "Burmester A, Hipler UC, Hensche R, Elsner P, Wiegand C. 2019. Point mutations in the squalene epoxidase gene of Indian ITS genotype VIII T. mentagrophytes identified after DNA isolation from infected scales. Med Mycol Case Rep, 26:23–24.",
+            "Clinical and Laboratory Standards Institute. 2008. Reference Method for Broth Dilution Antifungal Susceptibility Testing of Filamentous Fungi; Approved Standard – Second Edition. CLSI document M38-A2. Wayne, PA: Clinical and Laboratory Standards Institute.",
+            "Ebert A, Monod M, Salamin K, Burmester A, Uhrlaß S, Wiegand C, Hipler UC, Krüger C, Koch D, Wittig F, Verma SB, Singal A, Gupta S, Vasani R, Saraswat A, Madhu R, Panda S, Das A, Kura MM, Kumar A, Poojary S, Schirm S, Gräser Y, Paasch U, Nenoff P. 2020. Alarming India-wide phenomenon of antifungal resistance in dermatophytes: A multicentre study. Mycoses, 63(7):717–728.",
+            "Misra R, Malik A, Singhal S. 2011. Comparison of the activities of amphotericin B, itraconazole, and voriconazole against clinical and environmental isolates of Aspergillus species. Indian J Pathol Microbiol, 54(1):112–116.",
+            "Nenoff P, Krüger C, Schaller J, Ginter-Hanselmayer G, Schulte-Beerbühl R, Tietz HJ. 2014. Mykologie – ein Update Teil 2: Dermatomykosen: Klinisches Bild und Diagnostik. J Dtsch Dermatol Ges, 12(8):749-779.",
+            "Nenoff P, Verma SB, Ebert A, Süß A, Fischer E, Auerswald E, Dessoi S, Hofmann W, Schmidt S, Neubert K, Renner R, Sohl S, Hradetzky U, Krusche U, Wenzel HC, Staginnus A, Schaller J, Müller V, Tauer C, Gebhardt M, Uhrlaß S. 2020. Spread of Terbinafine-resistant Trichophyton mentagrophytes Type VIII (India) in Germany – “The Tip of the Iceberg?”. J Fungi (Basel), 6(4):207.",
+            "Norris HA, Elewski BE, Ghannoum MA. 1999. Optimal growth conditions for the determination of the antifungal susceptibility of three species of dermatophytes with the use of a microdilution method. J Am Acad Dermatol, 40(6 Suppl):S9–S13.",
+            "Santos DA, Hamdan JS. 2005. Evaluation of broth microdilution antifungal susceptibility testing conditions for Trichophyton rubrum. J Clin Microbiol, 43(4):1917–1920."
+        ];
+
+        // --- Render Functions ---
+        function renderText() {
+            const container = document.getElementById('text-grid');
+            container.innerHTML = corrections.map(c => `
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="issue-card p-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="status-badge bg-warn-light text-warning">Korrektur</span>
+                            <small class="font-monospace text-secondary">${c.loc}</small>
+                        </div>
+                        <div class="context-wrapper">
+                            <div class="mb-1"><span class="marker-err">${c.err}</span></div>
+                            <div><i class="fa-solid fa-arrow-right text-success me-2"></i><span class="marker-fix">${c.fix}</span></div>
+                        </div>
+                        <div class="reason-box">
+                            <i class="fa-solid fa-circle-info text-info mt-1"></i>
+                            <div><strong>Warum?</strong> ${c.why}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderLit(filter = '') {
+            const container = document.getElementById('lit-container');
+            const filtered = literature.filter(l => l.toLowerCase().includes(filter.toLowerCase()));
+            
+            if(filtered.length === 0) {
+                container.innerHTML = '<div class="p-4 text-center text-muted">Nichts gefunden.</div>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(ref => {
+                const yearMatch = ref.match(/\. \d{4}\./);
+                let display = ref;
+                if(yearMatch) {
+                    const idx = yearMatch.index;
+                    const authors = ref.substring(0, idx);
+                    const rest = ref.substring(idx);
+                    display = `<span class="lit-author">${authors}</span>${rest}`;
+                }
+                return `
+                <div class="lit-row" onclick="copyText('${ref.replace(/'/g, "\\'")}')">
+                    <div style="font-family: var(--font-read);">${display}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert("Referenz kopiert!");
+        }
+
+        // Init
+        renderText();
+        renderLit();
+        document.getElementById('litSearch').addEventListener('input', (e) => renderLit(e.target.value));
+
+    </script>
+</body>
+</html>
