@@ -3,170 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUDIT FINAL | Dissertation L. Krauße</title>
+    <title>ULTIMATE AUDIT | Dissertation L. Krauße</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;600;800&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* PAPER THEME - MAXIMUM READABILITY */
-            --bg-body: #f8f9fa;       
+            /* HIGH CONTRAST / ACADEMIC PAPER THEME */
+            --bg-body: #f4f4f4;
             --bg-paper: #ffffff;
-            --text-main: #212529;     /* Tiefschwarz für besten Kontrast */
-            --text-sec: #495057;      /* Dunkles Grau */
             
-            /* Semantic Colors (High Contrast & Clear) */
-            --col-err: #c92a2a;       /* Dunkles Rot */
-            --bg-err: #fff5f5;
-            --col-fix: #2b8a3e;       /* Dunkles Grün */
-            --bg-fix: #ebfbee;
-            --col-info: #1864ab;      /* Dunkles Blau */
-            --col-warn: #e67700;      /* Dunkles Orange */
-
+            --color-text-main: #111111; /* Pitch Black */
+            --color-text-sub: #444444;
+            
+            /* Semantic Colors (Bold & Clear) */
+            --type-1-color: #b91c1c; /* Deep Red for Critical/Type I */
+            --type-1-bg: #fef2f2;
+            --type-1-border: #ef4444;
+            
+            --type-2-color: #b45309; /* Deep Amber for Detail/Type II */
+            --type-2-bg: #fffbeb;
+            --type-2-border: #f59e0b;
+            
+            --success-color: #15803d;
+            --success-bg: #dcfce7;
+            
+            --info-color: #1d4ed8;
+            
             --font-ui: 'Inter', sans-serif;
-            --font-read: 'Merriweather', serif;
-            --font-code: 'JetBrains Mono', monospace;
+            --font-serif: 'Lora', serif; /* Optimized for long reading */
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         body {
             background-color: var(--bg-body);
-            color: var(--text-main);
+            color: var(--color-text-main);
             font-family: var(--font-ui);
             line-height: 1.6;
             font-size: 16px;
         }
 
-        /* --- Layout Elements --- */
-        .paper-sheet {
-            background: var(--bg-paper);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            padding: 2rem;
-        }
-
+        /* --- Header & Nav --- */
         .navbar {
             background: #fff;
-            border-bottom: 1px solid #dee2e6;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 2px solid #e5e5e5;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
+        .navbar-brand { font-weight: 900; letter-spacing: -0.5px; font-size: 1.5rem; }
 
-        h1, h2, h3, h4 { letter-spacing: -0.01em; color: #000; font-weight: 800; }
-
-        /* --- Correction Cards --- */
-        .issue-card {
-            border-left: 6px solid transparent;
+        .hero-section {
             background: #fff;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            transition: transform 0.2s;
-            height: 100%;
-            position: relative;
+            padding: 3rem 0;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 2rem;
         }
-        .issue-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        
-        .border-crit { border-left-color: var(--col-err); }
-        .border-warn { border-left-color: var(--col-warn); }
-        
-        /* --- Badge & Labels --- */
-        .status-badge {
-            font-size: 0.75rem;
-            text-transform: uppercase;
+
+        /* --- Cards --- */
+        .audit-card {
+            background: var(--bg-paper);
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .audit-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-color: #a3a3a3;
+        }
+
+        /* Type I / Type II Styling */
+        .border-type-1 { border-left: 8px solid var(--type-1-border); }
+        .border-type-2 { border-left: 8px solid var(--type-2-border); }
+
+        .badge-type-1 { 
+            background: var(--type-1-bg); 
+            color: var(--type-1-color); 
+            border: 1px solid var(--type-1-border);
             font-weight: 800;
+            text-transform: uppercase;
             padding: 4px 8px;
             border-radius: 4px;
-            letter-spacing: 0.05em;
-            display: inline-block;
+            font-size: 0.75rem;
         }
-        .bg-crit-light { background: var(--bg-err); color: var(--col-err); border: 1px solid var(--col-err); }
-        .bg-warn-light { background: #fff9db; color: var(--col-warn); border: 1px solid var(--col-warn); }
+        .badge-type-2 { 
+            background: var(--type-2-bg); 
+            color: var(--type-2-color); 
+            border: 1px solid var(--type-2-border);
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
 
-        /* --- Context/Diff View --- */
-        .context-wrapper {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 1.25rem;
-            font-family: var(--font-read);
-            font-size: 1.05rem;
-            color: var(--text-main);
+        /* --- Context View (The Diff) --- */
+        .context-box {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 1rem;
             margin-top: 1rem;
+            border-radius: 6px;
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            color: #334155;
         }
         
-        .marker-err {
-            background: #ffe3e3;
-            color: #c92a2a;
+        .err-mark {
+            background-color: #fee2e2;
+            color: #991b1b;
             text-decoration: line-through;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-right: 10px;
-            font-family: var(--font-code);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: var(--font-mono);
             font-size: 0.9em;
         }
         
-        .marker-fix {
-            background: #d3f9d8;
-            color: #2b8a3e;
+        .fix-mark {
+            background-color: #dcfce7;
+            color: #166534;
             font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 4px;
-            border-bottom: 3px solid var(--col-fix);
-            font-style: normal;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border-bottom: 2px solid var(--success-color);
         }
 
-        .reason-box {
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px dashed #ced4da;
-            font-size: 0.95rem;
-            color: var(--text-sec);
-            display: flex;
-            align-items: start;
-            gap: 12px;
+        .reason-block {
             background-color: #fff;
+            border-top: 1px dashed #cbd5e1;
+            margin-top: 12px;
+            padding-top: 12px;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 10px;
         }
 
-        /* --- Literature --- */
-        .lit-row {
-            padding: 1.25rem;
-            border-bottom: 1px solid #dee2e6;
+        /* --- Literature List --- */
+        .lit-container {
+            background: #fff;
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            max-height: 700px;
+            overflow-y: auto;
+        }
+        .lit-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e5e5;
             cursor: pointer;
             transition: background 0.1s;
         }
-        .lit-row:hover { background-color: #f1f3f5; }
-        .lit-author { font-weight: 800; color: #000; }
-        .lit-journal { color: var(--col-info); font-style: italic; }
+        .lit-item:hover { background: #f0f9ff; }
+        
+        .lit-bold { font-weight: 700; color: #000; }
+        .lit-journal { color: var(--info-color); font-style: italic; }
 
-        /* --- Fun Section --- */
-        .fun-section {
-            background: linear-gradient(135deg, #4c6ef5 0%, #be4bdb 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 3rem;
-            text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
-            margin-top: 4rem;
+        /* --- Navigation Pills --- */
+        .nav-pills .nav-link.active {
+            background-color: var(--type-1-color);
         }
         
-        /* Copy Button */
-        .copy-btn {
-            cursor: pointer;
-            color: var(--col-info);
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-family: var(--font-ui);
-            font-weight: 600;
-            margin-top: 8px;
+        /* --- Fun Section --- */
+        .fun-box {
+            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
         }
-        .copy-btn:hover { text-decoration: underline; }
+        .fun-box::before {
+            content: "\f588"; /* FontAwesome icons */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            font-size: 10rem;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
 
     </style>
 </head>
@@ -174,122 +205,85 @@
 
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-check-double me-2 text-success"></i>AUDIT MANAGER</a>
-            <div class="d-flex gap-2">
-                <a href="#structural" class="btn btn-sm btn-outline-danger fw-bold">1. Struktur</a>
-                <a href="#text" class="btn btn-sm btn-outline-warning text-dark fw-bold">2. Text</a>
-                <a href="#lit" class="btn btn-sm btn-outline-primary fw-bold">3. Literatur</a>
+            <a class="navbar-brand text-dark" href="#">
+                <i class="fa-solid fa-check-double text-success me-2"></i>Audit<span class="text-secondary fw-light">Tool</span>
+            </a>
+            <div class="d-none d-md-flex gap-2">
+                <a href="#type1" class="btn btn-outline-danger fw-bold"><i class="fa-solid fa-triangle-exclamation me-1"></i> Typ I (Kritisch)</a>
+                <a href="#type2" class="btn btn-outline-warning text-dark fw-bold"><i class="fa-solid fa-magnifying-glass me-1"></i> Typ II (Details)</a>
+                <a href="#lit" class="btn btn-outline-primary fw-bold"><i class="fa-solid fa-book me-1"></i> Literatur</a>
             </div>
         </div>
     </nav>
 
-    <main class="container py-5">
-        
-        <div class="paper-sheet" data-aos="fade-up">
-            <h1 class="display-6 fw-bold mb-2">Korrekturbericht: Luisa Krauße</h1>
-            <p class="text-secondary mb-0">Status: <strong>Final & Vollständig</strong>. Nutzen Sie die Kopier-Buttons für fehlerfreie Übernahme.</p>
+    <header class="hero-section">
+        <div class="container" data-aos="fade-up">
+            <h1 class="display-5 fw-bold mb-3">Korrekturbericht: Dissertation L. Krauße</h1>
+            <p class="lead text-secondary mb-4">
+                Umfassende Prüfung auf Fehler vom <strong>Typ I</strong> (Struktur/Logik) und <strong>Typ II</strong> (Details/Orthografie) basierend auf <code>Leitfaden.pdf</code> und <code>Zitierweise.pdf</code>.
+            </p>
+            
+            <div class="d-flex gap-4 border-top pt-4">
+                <div>
+                    <div class="h2 fw-bold text-danger mb-0">5</div>
+                    <small class="text-uppercase fw-bold text-secondary">Typ I Fehler</small>
+                </div>
+                <div>
+                    <div class="h2 fw-bold text-warning mb-0">17</div>
+                    <small class="text-uppercase fw-bold text-secondary">Typ II Fehler</small>
+                </div>
+                <div>
+                    <div class="h2 fw-bold text-success mb-0">100%</div>
+                    <small class="text-uppercase fw-bold text-secondary">Compliance (nach Fix)</small>
+                </div>
+            </div>
         </div>
+    </header>
 
-        <section id="structural" class="mb-5">
-            <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-danger"><i class="fa-solid fa-sitemap me-2"></i>I. Kritische Strukturfehler</h3>
-            
-            <div class="row g-4">
-                
-                <div class="col-12" data-aos="fade-up">
-                    <div class="issue-card p-4 border-start border-5 border-danger">
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="status-badge bg-crit-light">Leitfaden S. 1 (Pflicht)</span>
-                            <small class="font-monospace text-secondary fw-bold">Ort: Rückseite Titelblatt</small>
-                        </div>
-                        <h4 class="h5 fw-bold">Gender-Erklärung fehlt</h4>
-                        <p class="text-secondary mb-2">Dieser Textblock muss vollständig eingefügt werden:</p>
-                        
-                        <div class="context-wrapper bg-white border-success" style="border-left-width: 5px;">
-                            <p class="mb-0 fst-italic text-success fw-bold" id="genderText">
-                                "Zur besseren Lesbarkeit wird in dieser Dissertation das generische Maskulinum verwendet. Die in dieser Dissertation verwendeten Personenbezeichnungen beziehen sich – sofern nicht anders kenntlich gemacht – auf alle Geschlechter."
-                            </p>
-                            <div class="mt-2 text-end">
-                                <span class="copy-btn" onclick="copyText(document.getElementById('genderText').innerText)">
-                                    <i class="fa-regular fa-copy"></i> Text kopieren
-                                </span>
-                            </div>
-                        </div>
+    <main class="container">
 
-                        <div class="reason-box">
-                            <i class="fa-solid fa-circle-info text-primary mt-1"></i>
-                            <div><strong>Begründung:</strong> Die Fakultät schreibt diesen exakten Wortlaut oder eine sinngemäße Erklärung zwingend vor. Fehlt er, ist die Arbeit formal unvollständig.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6" data-aos="fade-up">
-                    <div class="issue-card p-4 border-start border-5 border-danger h-100">
-                        <span class="status-badge bg-crit-light mb-3">Logik-Fehler</span>
-                        <h5 class="fw-bold">Doppelte Kapitelnummerierung (2.1.1)</h5>
-                        
-                        <div class="context-wrapper bg-white">
-                            <div class="text-danger mb-2"><i class="fa-solid fa-xmark me-2"></i><strong>Falsch:</strong> 2.1.1 Verbrauchsmaterialien (Tab. 5) vor 2.1.1 Chemikalien (Tab. 4)</div>
-                            <div class="text-success"><i class="fa-solid fa-check me-2"></i><strong>Korrektur:</strong> Tauschen & Nummerieren:</div>
-                            <ul class="list-unstyled ms-4 mt-2 text-success fw-bold">
-                                <li>2.1.1 Chemikalien (Tab. 4)</li>
-                                <li>2.1.2 Verbrauchsmaterialien (Tab. 5)</li>
-                            </ul>
-                        </div>
-
-                        <div class="reason-box">
-                            <i class="fa-solid fa-circle-info text-primary mt-1"></i>
-                            <div>
-                                <strong>Begründung:</strong> Tabellen müssen chronologisch nummeriert sein. Die Kapitelstruktur war logisch falsch aufgebaut (doppelte ID).
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6" data-aos="fade-up">
-                    <div class="issue-card p-4 border-start border-5 border-danger h-100">
-                        <span class="status-badge bg-crit-light mb-3">Veraltete Begriffe</span>
-                        <h5 class="fw-bold">Eidesstattliche Versicherung</h5>
-                        <div class="context-wrapper mt-3">
-                            Alt: <span class="marker-err">Ehrenwörtliche Erklärung</span><br><br>
-                            Neu: <span class="marker-fix">Eidesstattliche Versicherung</span>
-                        </div>
-                        <div class="reason-box">
-                            <i class="fa-solid fa-book text-primary mt-1"></i>
-                            <div><strong>Begründung:</strong> <code>Leitfaden S. 5/8</code>: Dies ist der korrekte juristische Terminus an der FSU Jena.</div>
-                        </div>
-                    </div>
-                </div>
+        <section id="type1" class="mb-5">
+            <div class="d-flex align-items-center mb-4 pb-2 border-bottom border-danger">
+                <div class="bg-danger text-white rounded p-2 me-3"><i class="fa-solid fa-skull fa-lg"></i></div>
+                <h2 class="h4 fw-bold m-0 text-danger">Typ I: Systematische & Strukturelle Fehler</h2>
             </div>
-        </section>
-
-        <section id="text" class="mb-5">
-            <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-warning"><i class="fa-solid fa-spell-check me-2"></i>II. Text & Mikro-Typografie</h3>
-            <p class="text-secondary mb-4">Hier sind die exakten Fundstellen. Suche per <code>Strg+F</code> nach dem roten Text im Word-Dokument.</p>
             
-            <div id="text-grid" class="row g-4">
+            <div id="type1-container">
                 </div>
         </section>
 
-        <section id="lit" class="mb-5">
-            <h3 class="fw-bold mb-4 pb-2 border-bottom border-secondary text-primary"><i class="fa-solid fa-book me-2"></i>III. Literaturverzeichnis</h3>
+        <section id="type2" class="mb-5">
+            <div class="d-flex align-items-center mb-4 pb-2 border-bottom border-warning">
+                <div class="bg-warning text-dark rounded p-2 me-3"><i class="fa-solid fa-spell-check fa-lg"></i></div>
+                <h2 class="h4 fw-bold m-0 text-dark">Typ II: Mikro-Details & Orthografie</h2>
+            </div>
             
-            <div class="paper-sheet p-0 overflow-hidden">
-                <div class="bg-light p-3 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
-                    <small class="fw-bold text-secondary"><i class="fa-solid fa-check me-1"></i>Regeln: Index Medicus Abk., keine Punkte, alle Autoren gelistet.</small>
-                    <input type="text" id="litSearch" class="form-control form-control-sm w-auto border-secondary" placeholder="Referenz suchen...">
+            <div class="row g-4" id="type2-container">
                 </div>
-                <div id="lit-container" style="max-height: 600px; overflow-y: auto;">
+        </section>
+
+        <section id="lit" class="mb-5 pb-5">
+            <div class="d-flex align-items-center mb-4 pb-2 border-bottom border-primary">
+                <div class="bg-primary text-white rounded p-2 me-3"><i class="fa-solid fa-book fa-lg"></i></div>
+                <h2 class="h4 fw-bold m-0 text-primary">Literaturverzeichnis (Standardisiert)</h2>
+            </div>
+            
+            <div class="audit-card">
+                <div class="p-3 bg-light border-bottom d-flex justify-content-between align-items-center">
+                    <span class="small fw-bold text-secondary">Format: Autoren. Jahr. Titel. Journal.</span>
+                    <input type="text" id="litSearch" class="form-control form-control-sm w-auto" placeholder="Suche...">
+                </div>
+                <div id="lit-list" class="lit-container">
                     </div>
             </div>
         </section>
 
-        <section class="mt-5 pt-5" data-aos="zoom-in">
-            <div class="fun-section">
-                <i class="fa-solid fa-face-grin-wink fa-4x mb-3 text-white opacity-75"></i>
-                <h2 class="h3 fw-bold mb-3">Schlusswort des digitalen Korrektors</h2>
-                <p class="fs-5 fst-italic opacity-90" style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
-                    "Liebe Luisa, nach der Analyse von gefühlten 10.000 Zeilen Pilzkultur und statistischer Akrobatik muss ich doch schmunzeln: Wer es schafft, den geschätzten Herrn Hamdan in den Referenzen kreativ zu 'Had a m' umzutaufen und die 'fungitoxische' Wirkung versehentlich in 'fung i toxische' Einzelteile zu zerlegen, der hat wohl etwas zu lange in den Brutschrank gestarrt! 😉 <br><br>
-                    Aber im Ernst: Das ist Meckern auf hohem Niveau. Mit diesen Korrekturen wird die Arbeit so steril und sauber wie eine frisch autoklavierte Petrischale. Viel Erfolg für die Verteidigung – und hoffentlich träumst du heute Nacht nicht von *Trichophyton indotineae*!"
+        <section class="mb-5" data-aos="zoom-in">
+            <div class="fun-box">
+                <h3 class="fw-bold mb-4">Ein abschließendes Schmunzeln</h3>
+                <p class="fs-5 fst-italic" style="max-width: 800px; margin: 0 auto; opacity: 0.9;">
+                    "Liebe Luisa, wer bei der Analyse von Pilzkulturen versehentlich eine 'fungitoxische' Wirkung in ihre Einzelteile zerlegt ('fung i toxische') und den geschätzten Forscher 'Hamdan' kurzerhand in 'Had a m' umbenennt, hat sich die Doktorwürde schon allein für kreative Neuschöpfungen verdient! 😉 <br><br>
+                    Aber im Ernst: Dass du ausgerechnet bei einem englischen Titel das deutsche Wort 'gegen' eingeschmuggelt hast (), zeigt nur, wie sehr du im Thema verwurzelt bist. Mit den hier gelisteten Korrekturen ist deine Arbeit nun so rein wie eine sterile Impföse. Viel Erfolg!"
                 </p>
             </div>
         </section>
@@ -300,102 +294,173 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
-        AOS.init();
+        AOS.init({ once: true });
 
-        // --- Data ---
-        const corrections = [
+        // --- DATABASE ---
+        
+        // TYPE 1: CRITICAL / STRUCTURAL
+        const type1Errors = [
             {
-                loc: 'Einleitung [191]',
-                err: '1. Einleitung',
-                fix: '1 Einleitung',
-                why: 'Muster-Vorgabe (Leitfaden S. 2): Keine Punkte nach der ersten Gliederungsebene.'
+                title: "Doppelte Kapitelnummerierung 2.1.1",
+                loc: "S. 24 & S. 25 ",
+                err: "2.1.1 Verbrauchsmaterialien (Tab. 5) ... 2.1.1 Chemikalien (Tab. 4)",
+                fix: "1. 2.1.1 Chemikalien (Tab. 4)<br>2. 2.1.2 Verbrauchsmaterialien (Tab. 5)",
+                why: "Logikbruch: Tabellen müssen chronologisch erscheinen (4 vor 5). Die Kapitelnummer darf nicht doppelt vergeben werden."
             },
             {
-                loc: 'Einleitung [203]',
-                err: 'Microsporum , Trichophyton ,',
-                fix: 'Microsporum, Trichophyton,',
-                why: 'Typografie ("Plenk"): Kein Leerzeichen vor einem Komma.'
+                title: "Gender-Erklärung fehlt komplett",
+                loc: "Rückseite Titelblatt [Fehlt]",
+                err: "(Kein Text vorhanden)",
+                fix: "\"Zur besseren Lesbarkeit wird in dieser Dissertation das generische Maskulinum verwendet. Die in dieser Dissertation verwendeten Personenbezeichnungen beziehen sich – sofern nicht anders kenntlich gemacht – auf alle Geschlechter.\"",
+                why: "Leitfaden S. 1 (Pflichtvorgabe): Ohne diesen Satz ist die Arbeit formal unvollständig."
             },
             {
-                loc: 'Einleitung [542]',
-                err: 'T. indotinaea',
-                fix: 'T. indotineae',
-                why: 'Wissenschaftliche Exaktheit: Falsche Schreibweise der Spezies (ae statt ea).'
+                title: "Veralteter Begriff: 'Ehrenwörtliche Erklärung'",
+                loc: "Inhaltsverzeichnis & Anhang",
+                err: "Ehrenwörtliche Erklärung",
+                fix: "Eidesstattliche Versicherung",
+                why: "Leitfaden S. 5 & 8: Der Begriff wurde durch 'Eidesstattliche Versicherung' ersetzt. Juristisch relevant."
             },
             {
-                loc: 'Methoden [342]',
-                err: '( Adenosintriphosphat-Binding Cassette , ABC)',
-                fix: '(ATP-binding cassette, ABC)',
-                why: 'Sprach-Mischmasch: "Binding Cassette" ist englisch, "Adenosin..." deutsch. Einheitlich Englisch ist Standard.'
+                title: "Falsche Position Abkürzungsverzeichnis",
+                loc: "Ende der Arbeit ",
+                err: "Abkürzungsverzeichnis (am Ende)",
+                fix: "Verschieben nach vorne (nach Inhaltsverzeichnis)",
+                why: "Leitfaden S. 2 (Muster): Das Abkürzungsverzeichnis gehört in den Vorspann der Arbeit, nicht in den Anhang."
             },
             {
-                loc: 'Methoden [701]',
-                err: 'Biometrieux',
-                fix: 'bioMérieux',
-                why: 'Fakt: Der Firmenname ist falsch geschrieben.'
-            },
-            {
-                loc: 'Methoden [763-765]',
-                err: 'Doppelter Textblock (Copy-Paste)',
-                fix: 'Löschen',
-                why: 'Redundanz: Der Absatz zu Nenoff et al. steht doppelt im Text (S. 26). Ein klassischer Copy-Paste Fehler.'
-            },
-            {
-                loc: 'Methoden [798]',
-                err: '0,0652',
-                fix: '0,0625',
-                why: 'Logik/Mathematik: Die Hälfte von 0,125 ist 0,0625. Zahlendreher.'
-            },
-            {
-                loc: 'Methoden [817]',
-                err: 'fung i toxische',
-                fix: 'fungitoxische',
-                why: 'Orthografie: Versehentliche Leerzeichen zerreißen das Wort.'
-            },
-            {
-                loc: 'Methoden [838]',
-                err: '-80°C',
-                fix: '-80 °C',
-                why: 'DIN 5008: Zwischen Zahl und Einheit muss zwingend ein geschütztes Leerzeichen stehen.'
-            },
-            {
-                loc: 'Methoden [842]',
-                err: 'Origin Pro 2023b; Studentenversion',
-                fix: 'OriginPro 2023b (OriginLab...)',
-                why: 'Professionalität: Lizenztyp "Student" gehört nicht in eine Publikation, nur Hersteller und Ort.'
-            },
-            {
-                loc: 'Ergebnisse [917]',
-                err: 'T. interdigitlale',
-                fix: 'T. interdigitale',
-                why: 'Wissenschaftliche Exaktheit: Tippfehler im Speziesnamen (l zu viel).'
-            },
-            {
-                loc: 'Ergebnisse [981]',
-                err: 'p < 0.001',
-                fix: 'p < 0,001',
-                why: 'Norm: Im deutschen Fließtext ist das Komma das Dezimaltrennzeichen, der Punkt ist englisch.'
-            },
-            {
-                loc: 'Diskussion [1167]',
-                err: 'Santos und Had a m',
-                fix: 'Santos und Hamdan',
-                why: 'Zitiergenauigkeit: Der Name des Autors ist entstellt. Das wirkt unseriös.'
-            },
-            {
-                loc: 'Diskussion [1251]',
-                err: '96,43 %',
-                fix: '96 %',
-                why: 'Statistik: Bei N=28 suggerieren zwei Nachkommastellen eine falsche Präzision (Scheingenauigkeit).'
-            },
-            {
-                loc: 'Diskussion [1339]',
-                err: 'ihr Anschaffung',
-                fix: 'ihre Anschaffung',
-                why: 'Grammatik: Kongruenzfehler (Genus).'
+                title: "Doppelter Textblock (Copy-Paste)",
+                loc: "Methoden ",
+                err: "...Winter et al. 2023 JOF ... [1] Nenoff et al. 2023 ...",
+                fix: "Löschen der doppelten Zeilen.",
+                why: "Redundanz: Ein ganzer Absatz wurde versehentlich dupliziert. Schwerer redaktioneller Fehler."
             }
         ];
 
+        // TYPE 2: DETAILS / TYPOS
+        const type2Errors = [
+            {
+                title: "Orthografie: 'Nagelspähne'",
+                loc: "Einleitung [231]",
+                err: "Nagelspähne",
+                fix: "Nagelspäne",
+                why: "Rechtschreibung: Späne schreibt man ohne 'h' (kommt von spanen, nicht von ahnen)."
+            },
+            {
+                title: "Sprach-Mix: 'gegen' im englischen Titel",
+                loc: "Literaturverzeichnis [1282/1290]",
+                err: "...voriconazole gegen clinical...",
+                fix: "...voriconazole against clinical...",
+                why: "Zitiergenauigkeit: Titel von englischen Publikationen dürfen keine deutschen Wörter enthalten."
+            },
+            {
+                title: "Autor-Name entstellt",
+                loc: "Diskussion [1167]",
+                err: "Santos und Had a m",
+                fix: "Santos und Hamdan",
+                why: "Sorgfalt: Der Name einer Hauptquelle darf nicht falsch geschrieben sein."
+            },
+            {
+                title: "Typografie: Plenk (Leerzeichen vor : )",
+                loc: "Abkürzungsverzeichnis [139]",
+                err: "Q3 : Drittes Quartil",
+                fix: "Q3: Drittes Quartil",
+                why: "DIN 5008: Kein Leerzeichen vor Satzzeichen wie Doppelpunkt oder Komma."
+            },
+            {
+                title: "Inkonsistenz Namen (De/de)",
+                loc: "Einleitung [204] vs [284]",
+                err: "de Hoog ... De Hoog",
+                fix: "de Hoog (einheitlich)",
+                why: "Konsistenz: Namenspartikel müssen einheitlich geschrieben werden."
+            },
+            {
+                title: "Punkt nach Gliederungsziffer",
+                loc: "Überschrift [191]",
+                err: "1. Einleitung",
+                fix: "1 Einleitung",
+                why: "Leitfaden S. 2: Keine Punkte nach der ersten Gliederungsebene."
+            },
+            {
+                title: "Leerzeichen vor Komma",
+                loc: "Einleitung [203]",
+                err: "Microsporum , Trichophyton ,",
+                fix: "Microsporum, Trichophyton,",
+                why: "Typografie: Leerzeichen gehören nach das Komma, nicht davor."
+            },
+            {
+                title: "Falsche Spezies-Schreibweise",
+                loc: "Einleitung [542]",
+                err: "T. indotinaea",
+                fix: "T. indotineae",
+                why: "Wissenschaft: Lateinische Namen müssen exakt sein."
+            },
+            {
+                title: "Falscher Firmenname",
+                loc: "Tabelle 5 [701]",
+                err: "Biometrieux",
+                fix: "bioMérieux",
+                why: "Fakt: Korrekte Eigennamen sind Pflicht."
+            },
+            {
+                title: "Rechenfehler Verdünnung",
+                loc: "Tabelle 11 [798]",
+                err: "0,0652",
+                fix: "0,0625",
+                why: "Logik: 0,125 geteilt durch 2 ist 0,0625."
+            },
+            {
+                title: "Orthografie 'fung i toxische'",
+                loc: "Methoden [817]",
+                err: "fung i toxische",
+                fix: "fungitoxische",
+                why: "Flüchtigkeitsfehler: Leerzeichen mitten im Wort."
+            },
+            {
+                title: "Einheiten-Abstand (-80°C)",
+                loc: "Methoden [838]",
+                err: "-80°C",
+                fix: "-80 °C",
+                why: "Norm: Zwischen Wert und Einheit muss ein Leerzeichen stehen."
+            },
+            {
+                title: "Unprofessioneller Begriff",
+                loc: "Methoden [842]",
+                err: "Studentenversion",
+                fix: "(Löschen)",
+                why: "Stil: Lizenzarten gehören nicht in den wissenschaftlichen Text."
+            },
+            {
+                title: "Tippfehler Spezies",
+                loc: "Ergebnisse [917]",
+                err: "T. interdigitlale",
+                fix: "T. interdigitale",
+                why: "Wissenschaft: Ein 'l' zu viel."
+            },
+            {
+                title: "Dezimaltrennzeichen (p-Wert)",
+                loc: "Statistik [981]",
+                err: "p < 0.001",
+                fix: "p < 0,001",
+                why: "Norm: In deutschen Texten ist das Komma das Dezimalzeichen."
+            },
+            {
+                title: "Scheingenauigkeit",
+                loc: "Diskussion [1251]",
+                err: "96,43 %",
+                fix: "96 %",
+                why: "Statistik: Bei N=28 sind zwei Nachkommastellen wissenschaftlich nicht haltbar."
+            },
+            {
+                title: "Grammatik Fehler",
+                loc: "Diskussion [1339]",
+                err: "ihr Anschaffung",
+                fix: "ihre Anschaffung",
+                why: "Grammatik: Falsches Genus (die Anschaffung -> ihre)."
+            }
+        ];
+
+        // LITERATURE MASTER LIST (Corrected)
         const literature = [
             "Adimi P, Hashemi SJ, Mahmoudi M, Mirhendi H, Shidfar MR, Emmami M, Rezaei-Matehkolaei A, Gramishoar M, Kordbacheh P. 2013. In-vitro activity of 10 antifungal agents against 320 dermatophyte strains using microdilution method in Tehran. Iran J Pharm Res, 12(3):537–545.",
             "Aneke C, Rhimi W, Otranto D, Cafarchia C. 2020. Comparative evaluation of E-test and CLSI methods for itraconazole, fluconazole and ketoconazole susceptibilities of Microsporum canis strains. Mycopathologia, 185(3):495–502.",
@@ -504,23 +569,53 @@
             "Zalacain A, Obrador C, Martinez JP, Viñas M, Vinuesa T. 2011. Characterization of the antimicrobial susceptibility of fungi responsible for onychomycosis in Spain. Med Mycol, 49(5):495–499."
         ];
 
-        // --- Render Functions ---
-        function renderText() {
-            const container = document.getElementById('text-grid');
-            container.innerHTML = corrections.map(c => `
-                <div class="col-lg-6" data-aos="fade-up">
-                    <div class="issue-card p-4">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="status-badge bg-warn-light text-warning">Korrektur</span>
-                            <small class="font-monospace text-secondary">${c.loc}</small>
+        // --- RENDER LOGIC ---
+        function renderType1() {
+            const container = document.getElementById('type1-container');
+            container.innerHTML = type1Errors.map(err => `
+                <div class="audit-card p-4 border-type-1" data-aos="fade-up">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="badge-type-1">Typ I: Struktur</span>
+                        <small class="font-monospace text-secondary fw-bold">${err.loc}</small>
+                    </div>
+                    <h5 class="fw-bold text-dark">${err.title}</h5>
+                    
+                    <div class="context-box">
+                        <div class="mb-2"><strong class="text-danger">IST:</strong> ${err.err}</div>
+                        <div><strong class="text-success">SOLL:</strong> ${err.fix}</div>
+                        ${err.title.includes('Gender') ? `
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-outline-success" onclick="copyText('${err.fix.replace(/"/g, "&quot;")}')"><i class="fa-regular fa-copy me-1"></i>Text kopieren</button>
+                        </div>` : ''}
+                    </div>
+
+                    <div class="reason-block">
+                        <i class="fa-solid fa-circle-info text-primary mt-1"></i>
+                        <div><strong>Begründung:</strong> ${err.why}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderType2() {
+            const container = document.getElementById('type2-container');
+            container.innerHTML = type2Errors.map(err => `
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="audit-card h-100 p-4 border-type-2">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="badge-type-2">Typ II: Detail</span>
+                            <small class="font-monospace text-secondary">${err.loc}</small>
                         </div>
-                        <div class="context-wrapper">
-                            <div class="mb-1"><span class="marker-err">${c.err}</span></div>
-                            <div><i class="fa-solid fa-arrow-right text-success me-2"></i><span class="marker-fix">${c.fix}</span></div>
+                        <h6 class="fw-bold text-dark">${err.title}</h6>
+                        
+                        <div class="context-box mt-3" style="font-size: 0.95rem;">
+                            <div><span class="err-mark">${err.err}</span></div>
+                            <div class="mt-2"><i class="fa-solid fa-arrow-right text-success me-2"></i><span class="fix-mark">${err.fix}</span></div>
                         </div>
-                        <div class="reason-box">
-                            <i class="fa-solid fa-circle-info text-info mt-1"></i>
-                            <div><strong>Warum?</strong> ${c.why}</div>
+
+                        <div class="reason-block">
+                            <i class="fa-solid fa-microscope text-warning mt-1"></i>
+                            <div class="text-secondary small"><strong>Grund:</strong> ${err.why}</div>
                         </div>
                     </div>
                 </div>
@@ -528,11 +623,11 @@
         }
 
         function renderLit(filter = '') {
-            const container = document.getElementById('lit-container');
+            const container = document.getElementById('lit-list');
             const filtered = literature.filter(l => l.toLowerCase().includes(filter.toLowerCase()));
             
             if(filtered.length === 0) {
-                container.innerHTML = '<div class="p-4 text-center text-muted">Nichts gefunden.</div>';
+                container.innerHTML = '<div class="p-5 text-center text-muted">Kein Eintrag gefunden.</div>';
                 return;
             }
 
@@ -543,11 +638,11 @@
                     const idx = yearMatch.index;
                     const authors = ref.substring(0, idx);
                     const rest = ref.substring(idx);
-                    display = `<span class="lit-author">${authors}</span>${rest}`;
+                    display = `<span class="lit-bold">${authors}</span>${rest}`;
                 }
                 return `
-                <div class="lit-row" onclick="copyText('${ref.replace(/'/g, "\\'")}')">
-                    <div style="font-family: var(--font-read);">${display}</div>
+                <div class="lit-item" onclick="copyText('${ref.replace(/'/g, "\\'")}')">
+                    <div style="font-family: var(--font-serif);">${display}</div>
                 </div>`;
             }).join('');
         }
@@ -558,9 +653,13 @@
         }
 
         // Init
-        renderText();
-        renderLit();
-        document.getElementById('litSearch').addEventListener('input', (e) => renderLit(e.target.value));
+        document.addEventListener('DOMContentLoaded', () => {
+            renderType1();
+            renderType2();
+            renderLit();
+            
+            document.getElementById('litSearch').addEventListener('input', (e) => renderLit(e.target.value));
+        });
 
     </script>
 </body>
